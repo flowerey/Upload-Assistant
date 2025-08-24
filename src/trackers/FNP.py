@@ -23,13 +23,10 @@ class FNP:
         self.config = config
         self.tracker = 'FNP'
         self.source_flag = 'FnP'
-        # Fix: Corrected URLs with proper single quotes
         self.upload_url = 'https://fearnopeer.com/api/torrents/upload'
         self.search_url = 'https://fearnopeer.com/api/torrents/filter'
         self.torrent_url = 'https://fearnopeer.com/torrents/'
-        # Fix: Correctly formatted the signature string
         self.signature = "\n[center][url=https://github.com/Audionut/Upload-Assistant]Created by Audionut's Upload Assistant[/url][/center]"
-        # Fix: Correctly formatted the banned_groups as a list of strings
         self.banned_groups = ["4K4U", "BiTOR", "d3g", "FGT", "FRDS", "FTUApps", "GalaxyRG", "LAMA", "MeGusta", "NeoNoir", "PSA", "RARBG", "YAWNiX", "YTS", "YIFY", "x0r"]
 
     async def get_cat_id(self, category_name):
@@ -53,7 +50,7 @@ class FNP:
         return type_id
 
     async def get_res_id(self, resolution, disctype):
-        # Using the correct resolution IDs from the FNP tracker
+        # This mapping is used for file-based resolutions
         resolution_mapping = {
             '4320p': '1',
             '2160p': '2',
@@ -64,18 +61,17 @@ class FNP:
             '576i': '15',
             '480p': '8',
             '480i': '14',
-            'DVD': '14',
+            'DVD': '14', # DVD is hardcoded but included for clarity
         }
         
-        # Prioritize Disctype over resolution string for accuracy
+        # Prioritize physical media types first
         if disctype == 'DVD':
-            return resolution_mapping['DVD']
+            return '14'
         elif disctype == 'BD':
-            # This handles Blu-rays with different resolutions (e.g., 480p, 1080i)
-            # and defaults to 1080p if the resolution is not found in the mapping
+            # This handles various Blu-ray resolutions and defaults to 1080p if not found
             return resolution_mapping.get(resolution, '3')
         
-        # Fallback for all other types, like WEB-DL
+        # Fallback for all other types (e.g., WEB-DL, HD-TV)
         return resolution_mapping.get(resolution, '10')
 
     async def upload(self, meta, disctype):
@@ -89,10 +85,9 @@ class FNP:
         await common.unit3d_edit_desc(meta, self.tracker, self.signature)
         region_id = await common.unit3d_region_ids(meta.get('region'))
         distributor_id = await common.unit3d_distributor_ids(meta.get('distributor'))
-
-        anon = 1 if meta.get('anon', 1) or self.config['TRACKERS'][self.tracker].get('anon', False) else 0
         
-        # Use 'with' for safe file handling
+        anon = 1 if meta.get('anon', 1) or self.config['TRACKERS'][self.tracker].get('anon', False) else 0
+
         with open(f"{meta['base_dir']}/tmp/{meta['uuid']}/[{self.tracker}].torrent", 'rb') as open_torrent:
             files = {'torrent': open_torrent}
 
@@ -112,7 +107,7 @@ class FNP:
             if nfo_files:
                 with open(nfo_files[0], 'rb') as nfo_f:
                     files['nfo'] = ("nfo_file.nfo", nfo_f, "text/plain")
-            
+
             data = {
                 'name': meta['name'],
                 'description': desc,
