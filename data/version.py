@@ -1,4 +1,22 @@
-__version__ = "v6.0.1"
+__version__ = "v6.0.3"
+
+"""
+Release Notes for version v6.0.3 (2025-10-06):
+
+# ## What's Changed
+# 
+# * Update OTW banned release groups by @flowerey in 269b00f
+# * Update DarkPeers by @flowerey in 497633c
+# * Update YOINKED banned release groups by @flowerey in 177fa8d
+# * Merge branch 'Audionut:master' by @flowerey
+# * Merge branch 'Audionut:master' by @flowerey
+# * Merge branch 'Audionut:master' by @flowerey
+# * Merge branch 'Audionut:master' by @flowerey
+# * Other minor updates and improvements
+# 
+# **Full Changelog**: https://github.com/flowerey/Upload-Assistant/compare/v6.0.2...v6.0.3
+"""
+
 
 """
 Release Notes for version v6.0.1 (2025-10-04):
