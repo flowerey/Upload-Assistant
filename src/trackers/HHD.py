@@ -27,27 +27,16 @@ class HHD(UNIT3D):
         ]
         pass
 
-    async def get_resolution_id(self, meta, mapping_only=False, reverse=False, resolution=None):
+    async def get_resolution_id(self, meta):
         resolution_id = {
-            '4320p': '1',
-            '2160p': '2',
-            '1440p': '3',
-            '1080p': '3',
+            '4320p': '0',
+            '2160p': '1',
+            '1080p': '2',
             '1080i': '4',
             '720p': '5',
             '576p': '6',
             '576i': '7',
             '480p': '8',
-            '480i': '9',
-            'Other': '10'
-        }
-        if mapping_only:
-            return resolution_id
-        elif reverse:
-            return {v: k for k, v in resolution_id.items()}
-        elif resolution is not None:
-            return {'resolution_id': resolution_id.get(resolution, '10')}
-        else:
-            meta_resolution = meta.get('resolution', '')
-            resolved_id = resolution_id.get(meta_resolution, '10')
-            return {'resolution_id': resolved_id}
+            '480i': '9'
+        }.get(meta['resolution'], '10')
+        return {'resolution_id': resolution_id}
