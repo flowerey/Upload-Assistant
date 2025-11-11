@@ -96,7 +96,6 @@ async def gen_desc(meta):
                     else:
                         description.write(f"[code]{nfo_content}[/code]\n")
 
-                    meta["description"] = "CUSTOM"
                     content_written = True
 
                 nfo_content_utf8 = nfo_content.encode("utf-8", "ignore").decode("utf-8")
@@ -116,7 +115,6 @@ async def gen_desc(meta):
                     if not content_written:
                         description.write(cleaned_content + "\n")
                     meta["description_link_content"] = cleaned_content
-                    meta["description"] = "CUSTOM"
                     content_written = True
             except Exception as e:
                 console.print(f"[ERROR] Failed to fetch description from link: {e}")
@@ -129,7 +127,6 @@ async def gen_desc(meta):
                     if not content_written:
                         description.write(file_content)
                 meta["description_file_content"] = cleaned_content
-                meta["description"] = "CUSTOM"
                 content_written = True
 
         if not content_written:
@@ -223,10 +220,7 @@ class DescriptionBuilder:
             season_number = meta.get("season", "")
             episode_number = meta.get("episode", "")
             overview = tvmaze_episode_data.get("overview", "") or meta.get("overview_meta", "")
-            episode_title = meta.get("auto_episode_title", "")
-
-            if episode_title is None:
-                episode_title = episode_title = tvmaze_episode_data.get("episode_name", "")
+            episode_title = meta.get("auto_episode_title") or tvmaze_episode_data.get("episode_name", "")
 
             image = ""
             if meta.get("tv_pack", False):
@@ -245,7 +239,9 @@ class DescriptionBuilder:
                     title += f" - {season_number}{episode_number}"
 
             if episode_title:
-                title += f": {episode_title}"
+                if title:
+                    title += ": "
+                title += f"{episode_title}"
 
         except Exception as e:
             console.print(f"[yellow]Warning: Error getting TV info: {str(e)}[/yellow]")
@@ -459,15 +455,15 @@ class DescriptionBuilder:
             if not meta.get("language_checked", False):
                 await process_desc_language(meta, desc_parts, tracker)
             if meta.get("audio_languages") and meta.get("write_audio_languages"):
-                desc_parts.append(f"[code]Audio Language/s: {', '.join(meta['audio_languages'])}[/code]\n")
+                desc_parts.append(f"[code]Audio Language/s: {', '.join(meta['audio_languages'])}[/code]")
 
             if meta["subtitle_languages"] and meta["write_subtitle_languages"]:
                 desc_parts.append(
-                    f"[code]Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]\n"
+                    f"[code]Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]"
                 )
             if meta["subtitle_languages"] and meta["write_hc_languages"]:
                 desc_parts.append(
-                    f"[code]Hardcoded Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]\n"
+                    f"[code]Hardcoded Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]"
                 )
         except Exception as e:
             console.print(f"[yellow]Warning: Error processing language: {str(e)}[/yellow]")
@@ -475,45 +471,43 @@ class DescriptionBuilder:
         # Logo
         logo, logo_size = await self.get_logo_section(meta, tracker)
         if logo and logo_size:
-            desc_parts.append(f"[center][img={logo_size}]{logo}[/img][/center]\n\n")
+            desc_parts.append(f"[center][img={logo_size}]{logo}[/img][/center]\n")
 
         # Blu-ray
         release_url, cover_images = await self.get_bluray_section(meta, tracker)
         if release_url:
-            desc_parts.append(f"[center]{release_url}[/center]\n")
+            desc_parts.append(f"[center]{release_url}[/center]")
         if cover_images:
-            desc_parts.append(f"[center]{cover_images}[/center]\n\n")
+            desc_parts.append(f"[center]{cover_images}[/center]\n")
 
         # TV
         title, episode_image, episode_overview = await self.get_tv_info(meta, tracker)
         if episode_overview:
             if tracker == "HUNO":
-                desc_parts.append(f"[center]{title}[/center]\n\n")
+                desc_parts.append(f"[center]{title}[/center]\n")
             else:
-                desc_parts.append(f"[center][pre]{title}[/pre][/center]\n\n")
+                desc_parts.append(f"[center][pre]{title}[/pre][/center]\n")
 
             if tracker == "HUNO":
-                desc_parts.append(f"[center]{episode_overview}[/center]")
+                desc_parts.append(f"[center]{episode_overview}[/center]\n")
             else:
-                desc_parts.append(f"[center][pre]{episode_overview}[/pre][/center]\n\n")
+                desc_parts.append(f"[center][pre]{episode_overview}[/pre][/center]\n")
 
         # Description that may come from API requests
         meta_description = meta.get("description", "")
-        if meta_description and meta_description != "CUSTOM":
-            # Add FraMeSToR NFO to Aither
-            if tracker == "AITHER" and "framestor" in meta and meta["framestor"]:
-                meta_description = re.sub(
-                    r"\[center\]\[spoiler=FraMeSToR NFO:\]", "", meta_description, count=1
-                )
-                meta_description = re.sub(r"\[/spoiler\]\[/center\]", "", meta_description, count=1)
-                meta_description = meta_description.replace(
+        # Add FraMeSToR NFO to Aither
+        if tracker == "AITHER" and "framestor" in meta and meta["framestor"]:
+            nfo_content = meta.get("description_nfo_content", "")
+            if nfo_content:
+                aither_framestor_nfo = f"[code]{nfo_content}[/code]"
+                aither_framestor_nfo = aither_framestor_nfo.replace(
                     "https://i.imgur.com/e9o0zpQ.png",
                     "https://beyondhd.co/images/2017/11/30/c5802892418ee2046efba17166f0cad9.png",
                 )
                 images = []
-                if meta_description:
-                    desc_parts.append(meta_description)
+                desc_parts.append(aither_framestor_nfo)
             else:
+                # Remove NFO from description
                 meta_description = re.sub(
                     r"\[center\]\[spoiler=.*? NFO:\]\[code\](.*?)\[/code\]\[/spoiler\]\[/center\]",
                     "",
@@ -539,12 +533,12 @@ class DescriptionBuilder:
 
         # UA Signature
         if not signature:
-            signature = f"\n[right][url=https://github.com/Audionut/Upload-Assistant][size=4]{meta['ua_signature']}[/size][/url][/right]"
+            signature = f"[right][url=https://github.com/Audionut/Upload-Assistant][size=4]{meta['ua_signature']}[/size][/url][/right]"
             if tracker == "HUNO":
                 signature = signature.replace("[size=4]", "[size=8]")
         desc_parts.append(signature)
 
-        description = "".join(
+        description = "\n".join(
             part for part in desc_parts
             if part is not None and str(part).strip()
         )
@@ -561,10 +555,11 @@ class DescriptionBuilder:
         if comparison is False:
             description = bbcode.convert_comparison_to_collapse(description, 1000)
 
-        async with aiofiles.open(
-            f"{meta['base_dir']}/tmp/{meta['uuid']}/[{tracker}]DESCRIPTION.txt", "w", encoding="utf-8"
-        ) as description_file:
-            await description_file.write(description)
+        if meta['debug']:
+            desc_file = f"{meta['base_dir']}/tmp/{meta['uuid']}/[{tracker}]DESCRIPTION.txt"
+            console.print(f"DEBUG: Saving final description to [yellow]{desc_file}[/yellow]")
+            async with aiofiles.open(desc_file, "w", encoding="utf-8") as description_file:
+                await description_file.write(description)
 
         return description
 

@@ -78,9 +78,7 @@ class ULCX(UNIT3D):
         return data
 
     async def get_description(self, meta):
-        await DescriptionBuilder(self.config).unit3d_edit_desc(meta, self.tracker, comparison=True)
-        async with aiofiles.open(f"{meta['base_dir']}/tmp/{meta['uuid']}/[{self.tracker}]DESCRIPTION.txt", 'r', encoding='utf-8') as f:
-            desc = await f.read()
+        desc = await DescriptionBuilder(self.config).unit3d_edit_desc(meta, self.tracker, comparison=True)
 
         genres = f"{meta.get('keywords', '')} {meta.get('combined_genres', '')}"
         adult_keywords = ['xxx', 'erotic', 'porn', 'adult', 'orgy']
