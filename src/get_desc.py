@@ -189,11 +189,12 @@ class DescriptionBuilder:
 
     async def get_logo_section(self, meta, tracker):
         """Returns the logo URL and size if applicable."""
+        logo, logo_size = "", ""
         try:
             if not self.config["TRACKERS"][tracker].get(
                 "add_logo", self.config["DEFAULT"].get("add_logo", False)
             ):
-                return None, None
+                return logo, logo_size
 
             logo = meta.get("logo", "")
             logo_size = self.config["DEFAULT"].get("logo_size", "300")
@@ -203,7 +204,7 @@ class DescriptionBuilder:
         except Exception as e:
             console.print(f"[yellow]Warning: Error getting logo section: {str(e)}[/yellow]")
 
-        return None, None
+        return logo, logo_size
 
     async def get_tv_info(self, meta, tracker, resize=False):
         title, image, overview = "", "", ""
@@ -427,7 +428,7 @@ class DescriptionBuilder:
         self,
         meta,
         tracker,
-        signature,
+        signature="",
         comparison=False,
         desc_header="",
         image_list=None,
@@ -445,51 +446,52 @@ class DescriptionBuilder:
         desc_parts = []
 
         # Custom Header
-        try:
-            desc_header = await self.get_custom_header(tracker)
-        except Exception as e:
-            console.print(f"[yellow]Warning: Error setting custom description header: {str(e)}[/yellow]")
+        if not desc_header:
+            try:
+                desc_header = await self.get_custom_header(tracker)
+            except Exception as e:
+                console.print(f"[yellow]Warning: Error setting custom description header: {str(e)}[/yellow]")
 
         if desc_header:
             if not desc_header.endswith("\n"):
-                await desc_parts.append(desc_header + "\n")
+                desc_parts.append(desc_header + "\n")
             else:
-                await desc_parts.append(desc_header)
+                desc_parts.append(desc_header)
 
         # Language
         if not meta.get("language_checked", False):
             await process_desc_language(meta, desc_parts, tracker)
-        if meta["audio_languages"] and meta["write_audio_languages"]:
-            await desc_parts.append(f"[code]Audio Language/s: {', '.join(meta['audio_languages'])}[/code]\n")
+        if meta.get("audio_languages") and meta.get("write_audio_languages"):
+            desc_parts.append(f"[code]Audio Language/s: {', '.join(meta['audio_languages'])}[/code]\n")
 
         if meta["subtitle_languages"] and meta["write_subtitle_languages"]:
-            await desc_parts.append(
+            desc_parts.append(
                 f"[code]Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]\n"
             )
         if meta["subtitle_languages"] and meta["write_hc_languages"]:
-            await desc_parts.append(
+            desc_parts.append(
                 f"[code]Hardcoded Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]\n"
             )
 
         # Logo
         logo, logo_size = await self.get_logo_section(meta, tracker)
         if logo and logo_size:
-            await desc_parts.append(f"[center][img={logo_size}]{logo}[/img][/center]\n\n")
+            desc_parts.append(f"[center][img={logo_size}]{logo}[/img][/center]\n\n")
 
         # Blu-ray
         release_url, cover_images_list = await self.get_bluray_section(meta, tracker)
         if release_url:
-            await desc_parts.append(f"[center]{release_url}[/center]\n")
+            desc_parts.append(f"[center]{release_url}[/center]\n")
         if cover_images_list:
-            await desc_parts.append("[center]" + cover_images_list + "[/center]\n\n")
+            desc_parts.append("[center]" + cover_images_list + "[/center]\n\n")
 
         # TV
         title, episode_image, episode_overview = await self.get_tv_info(meta, tracker)
         if episode_overview:
             if tracker == "HUNO":
-                await desc_parts.append(f"[center]{title}[/center]\n\n")
+                desc_parts.append(f"[center]{title}[/center]\n\n")
             else:
-                await desc_parts.append(f"[center][pre]{title}[/pre][/center]\n\n")
+                desc_parts.append(f"[center][pre]{title}[/pre][/center]\n\n")
 
             if tracker == "HUNO":
                 desc_parts.append(f"[center]{episode_overview}[/center]")
@@ -511,7 +513,7 @@ class DescriptionBuilder:
                 )
                 images = []
                 if meta_description:
-                    await desc_parts.append(meta_description)
+                    desc_parts.append(meta_description)
             else:
                 meta_description = re.sub(
                     r"\[center\]\[spoiler=.*? NFO:\]\[code\](.*?)\[/code\]\[/spoiler\]\[/center\]",
@@ -519,45 +521,46 @@ class DescriptionBuilder:
                     meta_description,
                     flags=re.DOTALL,
                 )
-                await desc_parts.append(meta_description)
+                desc_parts.append(meta_description)
 
         # Description from file/pastebin link
-        await desc_parts.append(await self.get_user_description(meta))
+        desc_parts.append(await self.get_user_description(meta))
 
         # Tonemapped Header
-        await desc_parts.append(await self.get_tonemapped_header(meta, tracker))
+        desc_parts.append(await self.get_tonemapped_header(meta, tracker))
 
         # Discs and Screenshots
         discs_and_screenshots = await self._handle_discs_and_screenshots(
             meta, tracker, approved_image_hosts, images, multi_screens
         )
-        await desc_parts.append(discs_and_screenshots)
+        desc_parts.append(discs_and_screenshots)
 
         # Custom Signature
-        await desc_parts.append(await self.get_custom_signature(tracker))
+        desc_parts.append(await self.get_custom_signature(tracker))
 
         # UA Signature
-        if signature:
-            await desc_parts.append(signature)
-        else:
+        if not signature:
             signature = f"\n[right][url=https://github.com/Audionut/Upload-Assistant][size=4]{meta['ua_signature']}[/size][/url][/right]"
             if tracker == "HUNO":
                 signature = signature.replace("[size=4]", "[size=8]")
-            await desc_parts.append(signature)
+        desc_parts.append(signature)
 
-        description = "".join(part for part in desc_parts if part.strip())
+        description = "".join(
+            part for part in desc_parts
+            if part is not None and str(part).strip()
+        )
 
         # Formatting
         bbcode = BBCODE()
-        desc_parts = bbcode.convert_pre_to_code(desc_parts)
-        desc_parts = bbcode.convert_hide_to_spoiler(desc_parts)
-        desc_parts = desc_parts.replace("[user]", "").replace("[/user]", "")
-        desc_parts = desc_parts.replace("[hr]", "").replace("[/hr]", "")
-        desc_parts = desc_parts.replace("[ul]", "").replace("[/ul]", "")
-        desc_parts = desc_parts.replace("[ol]", "").replace("[/ol]", "")
+        description = bbcode.convert_pre_to_code(description)
+        description = bbcode.convert_hide_to_spoiler(description)
+        description = description.replace("[user]", "").replace("[/user]", "")
+        description = description.replace("[hr]", "").replace("[/hr]", "")
+        description = description.replace("[ul]", "").replace("[/ul]", "")
+        description = description.replace("[ol]", "").replace("[/ol]", "")
         description = bbcode.remove_extra_lines(description)
         if comparison is False:
-            desc_parts = bbcode.convert_comparison_to_collapse(desc_parts, 1000)
+            description = bbcode.convert_comparison_to_collapse(description, 1000)
 
         async with aiofiles.open(
             f"{meta['base_dir']}/tmp/{meta['uuid']}/[{tracker}]DESCRIPTION.txt", "w", encoding="utf-8"
@@ -669,23 +672,23 @@ class DescriptionBuilder:
         if len(discs) == 1:
             each = discs[0]
             if each["type"] == "DVD":
-                await desc_parts.append("[center]")
-                await desc_parts.append(
+                desc_parts.append("[center]")
+                desc_parts.append(
                     f"[spoiler={os.path.basename(each['vob'])}][code]{each['vob_mi']}[/code][/spoiler]\n\n"
                 )
-                await desc_parts.append("[/center]")
+                desc_parts.append("[/center]")
             if screenheader is not None:
-                await desc_parts.append(screenheader + "\n")
-            await desc_parts.append("[center]")
+                desc_parts.append(screenheader + "\n")
+            desc_parts.append("[center]")
             for img_index in range(len(images[: int(meta["screens"])])):
                 web_url = images[img_index]["web_url"]
                 raw_url = images[img_index]["raw_url"]
-                await desc_parts.append(
+                desc_parts.append(
                     f"[url={web_url}][img={self.config['DEFAULT'].get('thumbnail_size', '350')}]{raw_url}[/img][/url] "
                 )
                 if screensPerRow and (img_index + 1) % screensPerRow == 0:
-                    await desc_parts.append("\n")
-            await desc_parts.append("[/center]")
+                    desc_parts.append("\n")
+            desc_parts.append("[/center]")
             if each["type"] == "BDMV":
                 bdinfo_keys = [key for key in each if key.startswith("bdinfo")]
                 if len(bdinfo_keys) > 1:
@@ -725,27 +728,27 @@ class DescriptionBuilder:
                                     )
 
                         if new_images_key in meta and meta[new_images_key]:
-                            await desc_parts.append("[center]\n\n")
+                            desc_parts.append("[center]\n\n")
                             # Use the summary corresponding to the current bdinfo
-                            await desc_parts.append(
+                            desc_parts.append(
                                 f"[spoiler={edition}][code]{summary}[/code][/spoiler]\n\n"
                             )
                             if meta["debug"]:
                                 console.print("[yellow]Using original uploaded images for first disc")
-                            await desc_parts.append("[center]")
+                            desc_parts.append("[center]")
                             for img in meta[new_images_key]:
                                 web_url = img["web_url"]
                                 raw_url = img["raw_url"]
                                 image_str = f"[url={web_url}][img={thumb_size}]{raw_url}[/img][/url] "
-                                await desc_parts.append(image_str)
-                            await desc_parts.append("[/center]\n\n")
+                                desc_parts.append(image_str)
+                            desc_parts.append("[/center]\n\n")
                         else:
-                            await desc_parts.append("[center]\n\n")
+                            desc_parts.append("[center]\n\n")
                             # Use the summary corresponding to the current bdinfo
-                            await desc_parts.append(
+                            desc_parts.append(
                                 f"[spoiler={edition}][code]{summary}[/code][/spoiler]\n\n"
                             )
-                            await desc_parts.append("[/center]\n\n")
+                            desc_parts.append("[/center]\n\n")
                             meta["retry_count"] += 1
                             meta[new_images_key] = []
                             new_screens = glob.glob1(
@@ -793,13 +796,13 @@ class DescriptionBuilder:
                                         }
                                     )
 
-                                await desc_parts.append("[center]")
+                                desc_parts.append("[center]")
                                 for img in uploaded_images:
                                     web_url = img["web_url"]
                                     raw_url = img["raw_url"]
                                     image_str = f"[url={web_url}][img={thumb_size}]{raw_url}[/img][/url] "
-                                    await desc_parts.append(image_str)
-                                await desc_parts.append("[/center]\n\n")
+                                    desc_parts.append(image_str)
+                                desc_parts.append("[/center]\n\n")
 
                             meta_filename = f"{meta['base_dir']}/tmp/{meta['uuid']}/meta.json"
                             async with aiofiles.open(meta_filename, "w") as f:
@@ -822,32 +825,32 @@ class DescriptionBuilder:
                 new_images_key = f"new_images_disc_{i}"
 
                 if i == 0:
-                    await desc_parts.append("[center]")
+                    desc_parts.append("[center]")
                     if each["type"] == "BDMV":
-                        await desc_parts.append(f"{each.get('name', 'BDINFO')}\n\n")
+                        desc_parts.append(f"{each.get('name', 'BDINFO')}\n\n")
                     elif each["type"] == "DVD":
-                        await desc_parts.append(f"{each['name']}:\n")
-                        await desc_parts.append(
+                        desc_parts.append(f"{each['name']}:\n")
+                        desc_parts.append(
                             f"[spoiler={os.path.basename(each['vob'])}][code]{each['vob_mi']}[/code][/spoiler]"
                         )
-                        await desc_parts.append(
+                        desc_parts.append(
                             f"[spoiler={os.path.basename(each['ifo'])}][code]{each['ifo_mi']}[/code][/spoiler]\n\n"
                         )
                     # For the first disc, use images from `meta['image_list']` and add screenheader if applicable
                     if meta["debug"]:
                         console.print("[yellow]Using original uploaded images for first disc")
                     if screenheader is not None:
-                        await desc_parts.append("[/center]\n\n")
-                        await desc_parts.append(screenheader + "\n")
-                        await desc_parts.append("[center]")
+                        desc_parts.append("[/center]\n\n")
+                        desc_parts.append(screenheader + "\n")
+                        desc_parts.append("[center]")
                     for img_index in range(len(images[: int(meta["screens"])])):
                         web_url = images[img_index]["web_url"]
                         raw_url = images[img_index]["raw_url"]
                         image_str = f"[url={web_url}][img={thumb_size}]{raw_url}[/img][/url]"
-                        await desc_parts.append(image_str)
+                        desc_parts.append(image_str)
                         if screensPerRow and (img_index + 1) % screensPerRow == 0:
-                            await desc_parts.append("\n")
-                    await desc_parts.append("[/center]\n\n")
+                            desc_parts.append("\n")
+                    desc_parts.append("[/center]\n\n")
                 else:
                     if multi_screens != 0:
                         processed_count += 1
@@ -883,46 +886,46 @@ class DescriptionBuilder:
                         if new_images_key in meta and meta[new_images_key]:
                             if meta["debug"]:
                                 console.print(f"[yellow]Found needed image URLs for {new_images_key}")
-                            await desc_parts.append("[center]")
+                            desc_parts.append("[center]")
                             if each["type"] == "BDMV":
-                                await desc_parts.append(
+                                desc_parts.append(
                                     f"[spoiler={each.get('name', 'BDINFO')}][code]{each['summary']}[/code][/spoiler]\n\n"
                                 )
                             elif each["type"] == "DVD":
-                                await desc_parts.append(f"{each['name']}:\n")
-                                await desc_parts.append(
+                                desc_parts.append(f"{each['name']}:\n")
+                                desc_parts.append(
                                     f"[spoiler={os.path.basename(each['vob'])}][code]{each['vob_mi']}[/code][/spoiler] "
                                 )
-                                await desc_parts.append(
+                                desc_parts.append(
                                     f"[spoiler={os.path.basename(each['ifo'])}][code]{each['ifo_mi']}[/code][/spoiler]\n\n"
                                 )
-                            await desc_parts.append("[/center]\n\n")
+                            desc_parts.append("[/center]\n\n")
                             # Use existing URLs from meta to write to descfile
-                            await desc_parts.append("[center]")
+                            desc_parts.append("[center]")
                             for img in meta[new_images_key]:
                                 web_url = img["web_url"]
                                 raw_url = img["raw_url"]
                                 image_str = f"[url={web_url}][img={thumb_size}]{raw_url}[/img][/url]"
-                                await desc_parts.append(image_str)
-                            await desc_parts.append("[/center]\n\n")
+                                desc_parts.append(image_str)
+                            desc_parts.append("[/center]\n\n")
                         else:
                             # Increment retry_count for tracking but use unique disc keys for each disc
                             meta["retry_count"] += 1
                             meta[new_images_key] = []
-                            await desc_parts.append("[center]")
+                            desc_parts.append("[center]")
                             if each["type"] == "BDMV":
-                                await desc_parts.append(
+                                desc_parts.append(
                                     f"[spoiler={each.get('name', 'BDINFO')}][code]{each['summary']}[/code][/spoiler]\n\n"
                                 )
                             elif each["type"] == "DVD":
-                                await desc_parts.append(f"{each['name']}:\n")
-                                await desc_parts.append(
+                                desc_parts.append(f"{each['name']}:\n")
+                                desc_parts.append(
                                     f"[spoiler={os.path.basename(each['vob'])}][code]{each['vob_mi']}[/code][/spoiler] "
                                 )
-                                await desc_parts.append(
+                                desc_parts.append(
                                     f"[spoiler={os.path.basename(each['ifo'])}][code]{each['ifo_mi']}[/code][/spoiler]\n\n"
                                 )
-                            await desc_parts.append("[/center]\n\n")
+                            desc_parts.append("[/center]\n\n")
                             # Check if new screenshots already exist before running prep.screenshots
                             if each["type"] == "BDMV":
                                 new_screens = glob.glob1(
@@ -981,7 +984,7 @@ class DescriptionBuilder:
                                     allowed_hosts=approved_image_hosts,
                                 )
                                 if uploaded_images and not meta.get("skip_imghost_upload", False):
-                                    await self.save_image_links(meta, new_images_key, uploaded_images)
+                                    await self.common.save_image_links(meta, new_images_key, uploaded_images)
                                 # Append each uploaded image's data to `meta[new_images_key]`
                                 for img in uploaded_images:
                                     meta[new_images_key].append(
@@ -993,13 +996,13 @@ class DescriptionBuilder:
                                     )
 
                                 # Write new URLs to descfile
-                                await desc_parts.append("[center]")
+                                desc_parts.append("[center]")
                                 for img in uploaded_images:
                                     web_url = img["web_url"]
                                     raw_url = img["raw_url"]
                                     image_str = f"[url={web_url}][img={thumb_size}]{raw_url}[/img][/url]"
-                                    await desc_parts.append(image_str)
-                                await desc_parts.append("[/center]\n\n")
+                                    desc_parts.append(image_str)
+                                desc_parts.append("[/center]\n\n")
 
                             # Save the updated meta to `meta.json` after upload
                             meta_filename = f"{meta['base_dir']}/tmp/{meta['uuid']}/meta.json"
@@ -1011,7 +1014,7 @@ class DescriptionBuilder:
         filelist = meta.get("filelist", [])
         if len(filelist) == 1:
             if meta.get("comparison") and meta.get("comparison_groups"):
-                await desc_parts.append("[center]")
+                desc_parts.append("[center]")
                 comparison_groups = meta.get("comparison_groups", {})
                 sorted_group_indices = sorted(comparison_groups.keys(), key=lambda x: int(x))
 
@@ -1022,7 +1025,7 @@ class DescriptionBuilder:
                     comp_sources.append(group_name)
 
                 sources_string = ", ".join(comp_sources)
-                await desc_parts.append(f"[comparison={sources_string}]\n")
+                desc_parts.append(f"[comparison={sources_string}]\n")
 
                 images_per_group = min(
                     [len(comparison_groups[idx].get("urls", [])) for idx in sorted_group_indices]
@@ -1035,22 +1038,22 @@ class DescriptionBuilder:
                         if img_idx < len(urls):
                             img_url = urls[img_idx].get("raw_url", "")
                             if img_url:
-                                await desc_parts.append(f"{img_url}\n")
+                                desc_parts.append(f"{img_url}\n")
 
-                await desc_parts.append("[/comparison][/center]\n\n")
+                desc_parts.append("[/comparison][/center]\n\n")
 
             if screenheader is not None:
-                await desc_parts.append(screenheader + "\n")
-            await desc_parts.append("[center]")
+                desc_parts.append(screenheader + "\n")
+            desc_parts.append("[center]")
             for img_index in range(len(images[: int(meta["screens"])])):
                 web_url = images[img_index]["web_url"]
                 raw_url = images[img_index]["raw_url"]
-                await desc_parts.append(
+                desc_parts.append(
                     f"[url={web_url}][img={self.config['DEFAULT'].get('thumbnail_size', '350')}]{raw_url}[/img][/url] "
                 )
                 if screensPerRow and (img_index + 1) % screensPerRow == 0:
-                    await desc_parts.append("\n")
-            await desc_parts.append("[/center]")
+                    desc_parts.append("\n")
+            desc_parts.append("[/center]")
 
         # Handle multiple files case
         # Initialize character counter
@@ -1176,7 +1179,7 @@ class DescriptionBuilder:
                 if multi_screens != 0:
                     if i >= file_limit:
                         if not other_files_spoiler_open:
-                            await desc_parts.append("[center][spoiler=Other files]\n")
+                            desc_parts.append("[center][spoiler=Other files]\n")
                             char_count += len("[center][spoiler=Other files]\n")
                             other_files_spoiler_open = True
 
@@ -1188,7 +1191,7 @@ class DescriptionBuilder:
                         )
                         parsed_mediainfo = self.parser.parse_mediainfo(mi_dump)
                         formatted_bbcode = self.parser.format_bbcode(parsed_mediainfo)
-                        await desc_parts.append(
+                        desc_parts.append(
                             f"[center][spoiler={filename}]{formatted_bbcode}[/spoiler][/center]\n"
                         )
                         char_count += len(
@@ -1196,9 +1199,9 @@ class DescriptionBuilder:
                         )
                     else:
                         if i == 0 and images and screenheader is not None:
-                            await desc_parts.append(screenheader + "\n")
+                            desc_parts.append(screenheader + "\n")
                             char_count += len(screenheader + "\n")
-                        await desc_parts.append(f"[center]{filename}\n[/center]\n")
+                        desc_parts.append(f"[center]{filename}\n[/center]\n")
                         char_count += len(f"[center]{filename}\n[/center]\n")
 
                 # Write images if they exist
@@ -1206,35 +1209,35 @@ class DescriptionBuilder:
                 if i == 0:  # For the first file, use 'image_list' key and add screenheader if applicable
                     if images:
                         if screenheader is not None:
-                            await desc_parts.append(screenheader + "\n")
+                            desc_parts.append(screenheader + "\n")
                             char_count += len(screenheader + "\n")
-                        await desc_parts.append("[center]")
+                        desc_parts.append("[center]")
                         char_count += len("[center]")
                         for img_index in range(len(images)):
                             web_url = images[img_index]["web_url"]
                             raw_url = images[img_index]["raw_url"]
                             image_str = f"[url={web_url}][img={thumb_size}]{raw_url}[/img][/url] "
-                            await desc_parts.append(image_str)
+                            desc_parts.append(image_str)
                             char_count += len(image_str)
                             if screensPerRow and (img_index + 1) % screensPerRow == 0:
-                                await desc_parts.append("\n")
-                        await desc_parts.append("[/center]\n\n")
+                                desc_parts.append("\n")
+                        desc_parts.append("[/center]\n\n")
                         char_count += len("[/center]\n\n")
                 elif multi_screens != 0:
                     if new_images_key in meta and meta[new_images_key]:
-                        await desc_parts.append("[center]")
+                        desc_parts.append("[center]")
                         char_count += len("[center]")
                         for img in meta[new_images_key]:
                             web_url = img["web_url"]
                             raw_url = img["raw_url"]
                             image_str = f"[url={web_url}][img={thumb_size}]{raw_url}[/img][/url] "
-                            await desc_parts.append(image_str)
+                            desc_parts.append(image_str)
                             char_count += len(image_str)
-                        await desc_parts.append("[/center]\n\n")
+                        desc_parts.append("[/center]\n\n")
                         char_count += len("[/center]\n\n")
 
             if other_files_spoiler_open:
-                await desc_parts.append("[/spoiler][/center]\n")
+                desc_parts.append("[/spoiler][/center]\n")
                 char_count += len("[/spoiler][/center]\n")
 
         if char_count >= 1 and meta["debug"]:
