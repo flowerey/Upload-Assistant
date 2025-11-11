@@ -45,5 +45,4 @@ class RAS(UNIT3D):
             if logo_path:
                 meta['logo'] = logo_path
 
-        builder = DescriptionBuilder(self.config)
-        return {'description': await builder.unit3d_edit_desc(meta, self.tracker)}
+        return {'description': await DescriptionBuilder(self.config).unit3d_edit_desc(meta, self.tracker)}

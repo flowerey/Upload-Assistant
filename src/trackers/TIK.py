@@ -165,8 +165,7 @@ class TIK(UNIT3D):
         return {'resolution_id': resolution_id}
 
     async def get_description(self, meta):
-        builder = DescriptionBuilder(self.config)
-        await builder.unit3d_edit_desc(meta, self.tracker, comparison=True)
+        await DescriptionBuilder(self.config).unit3d_edit_desc(meta, self.tracker, comparison=True)
         if meta.get('description_link') or meta.get('description_file'):
             async with aiofiles.open(f'{meta["base_dir"]}/tmp/{meta["uuid"]}/[{self.tracker}]DESCRIPTION.txt', 'r', encoding='utf-8') as f:
                 desc = await f.read()

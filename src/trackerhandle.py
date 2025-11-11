@@ -133,8 +133,7 @@ async def process_trackers(meta, config, client, console, api_trackers, tracker_
                         manual_tracker = manual_tracker.replace(" ", "").upper().strip()
                         tracker_class = tracker_class_map[manual_tracker](config=config)
                         if manual_tracker in api_trackers:
-                            builder = DescriptionBuilder(config)
-                            await builder.unit3d_edit_desc(meta, tracker_class.tracker, tracker_class.signature)
+                            await DescriptionBuilder(config).unit3d_edit_desc(meta, tracker_class.tracker, tracker_class.signature)
                         else:
                             await tracker_class.edit_desc(meta)
                 url = await package(meta)

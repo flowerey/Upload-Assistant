@@ -378,7 +378,8 @@ class DescriptionBuilder:
 
     async def get_bluray_section(self, meta, tracker):
         release_url = ""
-        cover_images_list = []
+        cover_list = []
+        cover_images = ""
 
         try:
             cover_size = int(self.config["DEFAULT"].get("bluray_image_size", "250"))
@@ -408,21 +409,25 @@ class DescriptionBuilder:
                             raw_url = img_data["raw_url"]
 
                             if tracker == "TL":
-                                cover_images_list.append(
+                                cover_list.append(
                                     f"""<a href="{web_url}"><img src="{raw_url}" style="max-width: {cover_size}px;"></a>  """
                                 )
                             elif tracker == "HDT":
-                                cover_images_list.append(
+                                cover_list.append(
                                     f"<a href='{raw_url}'><img src='{web_url}' height=137></a> "
                                 )
                             else:
-                                cover_images_list.append(
+                                cover_list.append(
                                     f"[url={web_url}][img={cover_size}]{raw_url}[/img][/url]"
                                 )
+
+            if cover_list:
+                cover_images = "".join(cover_list)
+
         except Exception as e:
             console.print(f"[yellow]Warning: Error getting bluray section: {str(e)}[/yellow]")
 
-        return release_url, cover_images_list
+        return release_url, cover_images
 
     async def unit3d_edit_desc(
         self,
@@ -447,31 +452,25 @@ class DescriptionBuilder:
 
         # Custom Header
         if not desc_header:
-            try:
-                desc_header = await self.get_custom_header(tracker)
-            except Exception as e:
-                console.print(f"[yellow]Warning: Error setting custom description header: {str(e)}[/yellow]")
-
-        if desc_header:
-            if not desc_header.endswith("\n"):
-                desc_parts.append(desc_header + "\n")
-            else:
-                desc_parts.append(desc_header)
+            desc_header = await self.get_custom_header(tracker)
 
         # Language
-        if not meta.get("language_checked", False):
-            await process_desc_language(meta, desc_parts, tracker)
-        if meta.get("audio_languages") and meta.get("write_audio_languages"):
-            desc_parts.append(f"[code]Audio Language/s: {', '.join(meta['audio_languages'])}[/code]\n")
+        try:
+            if not meta.get("language_checked", False):
+                await process_desc_language(meta, desc_parts, tracker)
+            if meta.get("audio_languages") and meta.get("write_audio_languages"):
+                desc_parts.append(f"[code]Audio Language/s: {', '.join(meta['audio_languages'])}[/code]\n")
 
-        if meta["subtitle_languages"] and meta["write_subtitle_languages"]:
-            desc_parts.append(
-                f"[code]Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]\n"
-            )
-        if meta["subtitle_languages"] and meta["write_hc_languages"]:
-            desc_parts.append(
-                f"[code]Hardcoded Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]\n"
-            )
+            if meta["subtitle_languages"] and meta["write_subtitle_languages"]:
+                desc_parts.append(
+                    f"[code]Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]\n"
+                )
+            if meta["subtitle_languages"] and meta["write_hc_languages"]:
+                desc_parts.append(
+                    f"[code]Hardcoded Subtitle Language/s: {', '.join(meta['subtitle_languages'])}[/code]\n"
+                )
+        except Exception as e:
+            console.print(f"[yellow]Warning: Error processing language: {str(e)}[/yellow]")
 
         # Logo
         logo, logo_size = await self.get_logo_section(meta, tracker)
@@ -479,11 +478,11 @@ class DescriptionBuilder:
             desc_parts.append(f"[center][img={logo_size}]{logo}[/img][/center]\n\n")
 
         # Blu-ray
-        release_url, cover_images_list = await self.get_bluray_section(meta, tracker)
+        release_url, cover_images = await self.get_bluray_section(meta, tracker)
         if release_url:
             desc_parts.append(f"[center]{release_url}[/center]\n")
-        if cover_images_list:
-            desc_parts.append("[center]" + cover_images_list + "[/center]\n\n")
+        if cover_images:
+            desc_parts.append(f"[center]{cover_images}[/center]\n\n")
 
         # TV
         title, episode_image, episode_overview = await self.get_tv_info(meta, tracker)
@@ -786,7 +785,7 @@ class DescriptionBuilder:
                                     allowed_hosts=approved_image_hosts,
                                 )
                                 if uploaded_images and not meta.get("skip_imghost_upload", False):
-                                    await self.save_image_links(meta, new_images_key, uploaded_images)
+                                    await self.common.save_image_links(meta, new_images_key, uploaded_images)
                                 for img in uploaded_images:
                                     meta[new_images_key].append(
                                         {
@@ -1145,7 +1144,7 @@ class DescriptionBuilder:
                                 allowed_hosts=approved_image_hosts,
                             )
                             if uploaded_images and not meta.get("skip_imghost_upload", False):
-                                await self.save_image_links(meta, new_images_key, uploaded_images)
+                                await self.common.save_image_links(meta, new_images_key, uploaded_images)
                             for img in uploaded_images:
                                 meta[new_images_key].append(
                                     {

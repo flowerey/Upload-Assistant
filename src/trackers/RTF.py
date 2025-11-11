@@ -34,8 +34,7 @@ class RTF():
     async def upload(self, meta, disctype):
         common = COMMON(config=self.config)
         await common.edit_torrent(meta, self.tracker, self.source_flag)
-        builder = DescriptionBuilder(self.config)
-        await builder.unit3d_edit_desc(meta, self.tracker, self.forum_link)
+        await DescriptionBuilder(self.config).unit3d_edit_desc(meta, self.tracker, self.forum_link)
         if meta['bdinfo'] is not None:
             mi_dump = None
             async with aiofiles.open(f"{meta['base_dir']}/tmp/{meta['uuid']}/BD_SUMMARY_00.txt", 'r', encoding='utf-8') as f:

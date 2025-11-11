@@ -99,8 +99,7 @@ class UNIT3D:
         return {'name': meta['name']}
 
     async def get_description(self, meta):
-        builder = DescriptionBuilder(self.config)
-        return {'description': await builder.unit3d_edit_desc(meta, self.tracker, comparison=True)}
+        return {'description': await DescriptionBuilder(self.config).unit3d_edit_desc(meta, self.tracker, comparison=True)}
 
     async def get_mediainfo(self, meta):
         if meta['bdinfo'] is not None:

@@ -101,8 +101,7 @@ class HUNO(UNIT3D):
         else:
             image_list = meta['image_list']
 
-        builder = DescriptionBuilder(self.config)
-        return {'description': await builder.unit3d_edit_desc(meta, self.tracker, image_list=image_list, approved_image_hosts=approved_image_hosts)}
+        return {'description': await DescriptionBuilder(self.config).unit3d_edit_desc(meta, self.tracker, image_list=image_list, approved_image_hosts=approved_image_hosts)}
 
     async def get_mediainfo(self, meta):
         if meta['bdinfo'] is not None:
