@@ -159,6 +159,7 @@ class DescriptionBuilder:
     def __init__(self, config):
         self.config = config
         self.common = COMMON(config)
+        self.parser = self.common.parser
 
     async def get_custom_header(self, tracker):
         """Returns a custom header if configured."""
