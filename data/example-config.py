@@ -574,6 +574,7 @@ config = {
             "link_dir_name": "",
             "api_key": "",
             "anon": False,
+            "timeout": 20,
         },
         "LST": {
             # Instead of using the tracker acronym for folder name when sym/hard linking, you can use a custom name
