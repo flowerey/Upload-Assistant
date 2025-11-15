@@ -2,6 +2,8 @@
 
 Fork of wastaken's Upload Assistant (desc branch), with updates from main repo, and my own custom changes.
 
+Might be a fully own customized fork, but unsure. :p
+
 Please see [here](https://github.com/Audionut/Upload-Assistant/compare/master...flowerey:Upload-Assistant:main) for a list of changes.
 
 | Name               | Acronym | Name                   | Acronym |
