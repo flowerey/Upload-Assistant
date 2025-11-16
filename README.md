@@ -8,6 +8,11 @@ Please see the original repo (Audionut/Upload Assistant) for installing and supp
 
 * Replace signature with own
 * Some other fixes
+* Most likely remove Docker
+* Run CI's
+* Remove useless stuff
+* Add support for RHD
+* Other stuff
 * Might be a fully own customized fork, but unsure :p
 
 ## Features (currently working)
