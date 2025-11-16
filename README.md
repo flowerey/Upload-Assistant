@@ -4,7 +4,17 @@ Fork of wastaken's Upload Assistant (desc branch), with updates from main repo, 
 
 Might be a fully own customized fork, but unsure. :p
 
-Please see [here](https://github.com/Audionut/Upload-Assistant/compare/master...flowerey:Upload-Assistant:main) for a list of changes.
+Currently does:
+
+Adds support for IHD (partially, still missing Anime movies)
+
+Fix LDU timeout (needs testing, still)
+
+Better UNIT3D description handling
+
+Add support for custom signatures
+
+Please see [here](https://github.com/Audionut/Upload-Assistant/compare/master...flowerey:Upload-Assistant:main) for a list of ALL changes.
 
 | Name               | Acronym | Name                   | Acronym |
 | ------------------ | :-----: | ---------------------- | :-----: |
