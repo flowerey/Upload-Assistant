@@ -1,19 +1,16 @@
 # flower's Upload Assistant
 
-Fork of [wastaken's Upload Assistant (desc branch)](https://github.com/Audionut/Upload-Assistant), with updates from the main repo and my own custom changes.
+Fork of [wastaken's Upload Assistant (desc branch)](https://github.com/wastaken7/Upload-Assistant), with updates from the main repo and my own custom changes.
 
 Please see the original repo (Audionut/Upload Assistant) for installing and support.
 
 ## TODOs
 
-* Replace signature with own
+* Change signature font to Monospace and maybe align it to left instead
 * Some other fixes
-* Most likely remove Docker
-* Run CI's
-* Remove useless stuff
 * Add support for RHD
 * Other stuff
-* Might be a fully own customized fork, but unsure :p
+* Fully rebrand
 
 ## Features
 

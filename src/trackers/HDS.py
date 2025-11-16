@@ -87,7 +87,7 @@ class HDS:
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[center][url=https://github.com/Audionut/Upload-Assistant][size=2]{meta['ua_signature']}[/size][/url][/center]")
+        desc_parts.append(f"[center][url=https://github.com/flowerey/Upload-Assistant][size=2]{meta['ua_signature']}[/size][/url][/center]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 
