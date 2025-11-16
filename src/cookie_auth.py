@@ -93,7 +93,7 @@ class CookieValidator:
         login_url = f'{base_url}/login.php'
 
         headers = {
-            "User-Agent": f"flower's Upload Assistant v1.0.0"
+            "User-Agent": "flower's Upload Assistant v1.0.0"
         }
 
         try:
@@ -217,7 +217,7 @@ class CookieValidator:
             return False
 
         headers = {
-            "User-Agent": f"flower's Upload Assistant v1.0.0"
+            "User-Agent": "flower's Upload Assistant v1.0.0"
         }
 
         try:
@@ -388,7 +388,7 @@ class CookieAuthUploader:
             files.update(additional_files)
 
         headers = {
-            "User-Agent": f"flower's Upload Assistant v1.0.0"
+            "User-Agent": "flower's Upload Assistant v1.0.0"
         }
 
         if meta.get("debug", False):
