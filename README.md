@@ -18,8 +18,9 @@ Please see the original repo (Audionut/Upload Assistant) for installing and supp
 ## Features
 
 * Adds support for IHD (partially, still missing Anime movies)
+* Update mkbrr
 * Customizable timeout for every tracker (see example-config.py)
-* Fix LDU timeout
+* Fix LDU timeout error
 * Improved UNIT3D description handling
 * Support for custom signatures (doesn't modify Created by Upload Assistant vX.X.X, yet, see example-config.py)
 
