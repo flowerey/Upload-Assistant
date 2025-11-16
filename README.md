@@ -7,17 +7,18 @@ Please see the original repo (Audionut/Upload-Assistant) for installing and supp
 ## TODOs
 
 * Add support for RHD
+* Enable request search support for IHD (which I disabled when adding support)
 * Fix --description (possibly my skill issue)
 * Possibly fix Aither internal upload description
 
 ## Features
 
-* Adds support for IHD
-* Update mkbrr
-* Customizable timeout for every tracker (see example-config.py)
-* Fix LDU timeout error
-* Improved UNIT3D description handling
 * Support for custom signatures (see example-config.py)
+* Improved UNIT3D description handling
+* Customizable timeout for every tracker (see example-config.py)
+* Update mkbrr
+* Adds support for IHD
+* Fix LDU timeout error
 
 For a complete list of all changes, see [here](https://github.com/Audionut/Upload-Assistant/compare/master...flowerey:Upload-Assistant:main).
 
