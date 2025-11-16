@@ -2,7 +2,7 @@
 
 Fork of [wastaken's Upload Assistant (desc branch)](https://github.com/wastaken7/Upload-Assistant), with updates from the main repo and my own custom changes.
 
-Please see the original repo (Audionut/Upload Assistant) for installing and support.
+Please see the original repo (Audionut/Upload-Assistant) for installing and support.
 
 ## TODOs
 
