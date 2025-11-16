@@ -2,16 +2,13 @@
 
 Fork of [wastaken's Upload Assistant (desc branch)](https://github.com/wastaken7/Upload-Assistant), with updates from the main repo and my own custom changes.
 
-Please see the original repo (Audionut/Upload Assistant) for installing and support.
+Please see the original repo (Audionut/Upload-Assistant) for installing and support.
 
 ## TODOs
 
-* Change signature font to Monospace and maybe align it to left instead
-* Some other fixes
+* Fix IHD Anime detection
 * Add support for RHD
-* Other stuff
-* Fully rebrand
-* Fix --description
+* Fix --description (possibly my skill issue)
 * Possibly fix Aither internal upload description
 
 ## Features
@@ -21,7 +18,7 @@ Please see the original repo (Audionut/Upload Assistant) for installing and supp
 * Customizable timeout for every tracker (see example-config.py)
 * Fix LDU timeout error
 * Improved UNIT3D description handling
-* Support for custom signatures (doesn't modify Created by Upload Assistant vX.X.X, yet, see example-config.py)
+* Support for custom signatures (see example-config.py)
 
 For a complete list of all changes, see [here](https://github.com/Audionut/Upload-Assistant/compare/master...flowerey:Upload-Assistant:main).
 
