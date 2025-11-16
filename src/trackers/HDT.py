@@ -30,7 +30,7 @@ class HDT:
         self.announce_url = self.config['TRACKERS'][self.tracker]['announce_url']
         self.banned_groups = []
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f'Upload Assistant ({platform.system()} {platform.release()})'
+            'User-Agent': f"flower's Upload Assistant ({platform.system()} {platform.release()})"
         }, timeout=60.0)
 
     async def validate_credentials(self, meta):
@@ -171,7 +171,7 @@ class HDT:
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[right][url=https://github.com/flowerey/Upload-Assistant][size=1]{meta['ua_signature']}[/size][/url][/right]")
+        desc_parts.append(f"[font=Monospace][right][url=https://github.com/flowerey/Upload-Assistant][size=1]{meta['ua_signature']}[/size][/url][/right][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 

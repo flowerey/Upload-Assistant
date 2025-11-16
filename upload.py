@@ -768,7 +768,7 @@ def extract_changelog(content, from_version, to_version):
 
 async def update_notification(base_dir):
     version_file = os.path.join(base_dir, 'data', 'version.py')
-    remote_version_url = 'https://raw.githubusercontent.com/Audionut/Upload-Assistant/master/data/version.py'
+    remote_version_url = 'https://raw.githubusercontent.com/flowerey/Upload-Assistant/master/data/version.py'
 
     notice = config['DEFAULT'].get('update_notification', True)
     verbose = config['DEFAULT'].get('verbose_notification', False)

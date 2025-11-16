@@ -26,7 +26,7 @@ class SPD:
         self.banned_groups = []
         self.banned_url = 'https://speedapp.io/api/torrent/release-group/blacklist'
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': "Upload Assistant",
+            'User-Agent': "flower's Upload Assistant",
             'accept': 'application/json',
             'Authorization': self.config['TRACKERS'][self.tracker]['api_key'],
         }, timeout=30.0)

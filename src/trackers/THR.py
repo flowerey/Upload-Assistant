@@ -79,7 +79,7 @@ class THR():
             'tube': meta.get('youtube', '')
         }
         headers = {
-            'User-Agent': f'Upload Assistant/2.3 ({platform.system()} {platform.release()})'
+            'User-Agent': f"flower's Upload Assistant/1.0 ({platform.system()} {platform.release()})"
         }
         # If pronfo fails, put mediainfo into THR parser
         if meta.get('is_disc', '') != 'BDMV':
@@ -461,7 +461,7 @@ class THR():
             'ssl': 'yes'
         }
         headers = {
-            'User-Agent': f'Upload Assistant/2.2 ({platform.system()} {platform.release()})',
+            'User-Agent': f"flower's Upload Assistant/1.0 ({platform.system()} {platform.release()})",
             'Referer': 'https://www.torrenthr.org/login.php'
         }
 

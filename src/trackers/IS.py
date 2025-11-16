@@ -23,7 +23,7 @@ class IS:
         self.base_url = 'https://immortalseed.me'
         self.torrent_url = 'https://immortalseed.me/details.php?hash='
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f"Upload Assistant/2.3 ({platform.system()} {platform.release()})"
+            'User-Agent': f"flower's Upload Assistant/1.0 ({platform.system()} {platform.release()})"
         }, timeout=30)
 
     async def validate_credentials(self, meta):

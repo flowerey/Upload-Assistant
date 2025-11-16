@@ -30,7 +30,7 @@ class ASC:
         self.requests_url = f'{self.base_url}/pedidos.php'
         self.layout = self.config['TRACKERS'][self.tracker].get('custom_layout', '2')
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f'Upload Assistant ({platform.system()} {platform.release()})'
+            'User-Agent': f"flower's Upload Assistant ({platform.system()} {platform.release()})"
         }, timeout=60.0)
 
         self.language_map = {

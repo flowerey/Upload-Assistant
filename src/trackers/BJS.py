@@ -39,7 +39,7 @@ class BJS:
         self.requests_url = f'{self.base_url}/requests.php?'
         self.auth_token = None
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f'Upload Assistant ({platform.system()} {platform.release()})'
+            'User-Agent': f"flower's Upload Assistant ({platform.system()} {platform.release()})"
         }, timeout=60.0)
 
     async def get_additional_checks(self, meta):

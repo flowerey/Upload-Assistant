@@ -23,7 +23,7 @@ class HDS:
         self.torrent_url = f'{self.base_url}/index.php?page=torrent-details&id='
         self.requests_url = f'{self.base_url}/index.php?page=viewrequests'
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f"Upload Assistant/2.3 ({platform.system()} {platform.release()})"
+            'User-Agent': f"flower's Upload Assistant/1.0 ({platform.system()} {platform.release()})"
         }, timeout=30)
 
     async def validate_credentials(self, meta):
@@ -87,7 +87,7 @@ class HDS:
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[center][url=https://github.com/flowerey/Upload-Assistant][size=2]{meta['ua_signature']}[/size][/url][/center]")
+        desc_parts.append(f"[font=Monospace][center][url=https://github.com/flowerey/Upload-Assistant][size=12]{meta['ua_signature']}[/size][/url][/center][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 

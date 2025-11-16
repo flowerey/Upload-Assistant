@@ -534,7 +534,7 @@ class DescriptionBuilder:
 
         # UA Signature
         if not signature:
-            signature = f"[right][url=https://github.com/flowerey/Upload-Assistant][size=4]{meta['ua_signature']}[/size][/url][/right]"
+            signature = f"[font=Monospace][right][url=https://github.com/flowerey/Upload-Assistant][size=12]{meta['ua_signature']}[/size][/url][/right][/font]"
             if tracker == "HUNO":
                 signature = signature.replace("[size=4]", "[size=8]")
         desc_parts.append(signature)

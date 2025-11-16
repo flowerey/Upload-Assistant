@@ -220,7 +220,7 @@ class GPW():
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[align=right][url=https://github.com/flowerey/Upload-Assistant][size=1]{meta['ua_signature']}[/size][/url][/align]")
+        desc_parts.append(f"[font=Monospace][align=right][url=https://github.com/flowerey/Upload-Assistant][size=12]{meta['ua_signature']}[/size][/url][/align][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 
@@ -318,7 +318,7 @@ class GPW():
             found_items = []
 
             try:
-                async with httpx.AsyncClient(cookies=cookies, timeout=30, headers={'User-Agent': 'Upload Assistant/2.3'}) as client:
+                async with httpx.AsyncClient(cookies=cookies, timeout=30, headers={'User-Agent': "flower's Upload Assistant/1.0"}) as client:
                     response = await client.get(search_url)
                     response.raise_for_status()
                     soup = BeautifulSoup(response.text, 'html.parser')

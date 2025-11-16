@@ -31,7 +31,7 @@ class BT:
         self.torrent_url = f'{self.base_url}/torrents.php?id='
         self.auth_token = None
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f'Upload Assistant ({platform.system()} {platform.release()})'
+            'User-Agent': f"flower's Upload Assistant ({platform.system()} {platform.release()})"
         }, timeout=60.0)
 
         target_site_ids = {

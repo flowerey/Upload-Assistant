@@ -35,7 +35,7 @@ class AZTrackerBase:
         self.source_flag = tracker_config.get('source_flag')
 
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f"Upload Assistant/2.3 ({platform.system()} {platform.release()})"
+            'User-Agent': f"flower's Upload Assistant/1.0 ({platform.system()} {platform.release()})"
         }, timeout=60.0)
         self.media_code = ''
 
@@ -415,7 +415,7 @@ class AZTrackerBase:
             'X-Requested-With': 'XMLHttpRequest',
             'Accept': 'application/json',
             'Origin': self.base_url,
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0'
         }
 
         data = {

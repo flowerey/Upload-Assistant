@@ -31,7 +31,7 @@ class AR():
         self.search_url = f'{self.base_url}/torrents.php'
         self.test_url = f'{self.base_url}/torrents.php'
         self.torrent_url = f'{self.base_url}/torrents.php?id='
-        self.user_agent = f'Upload Assistant/2.3 ({platform.system()} {platform.release()})'
+        self.user_agent = f"flower's Upload Assistant/1.0 ({platform.system()} {platform.release()})"
         self.banned_groups = []
 
     async def get_type(self, meta):
@@ -256,7 +256,7 @@ class AR():
             console.print(f"[blue]{search_url}")
 
         headers = {
-            "User-Agent": f"Upload Assistant {meta.get('current_version', 'github.com/Audionut/Upload-Assistant')}"
+            "User-Agent": f"flower's Upload Assistant {meta.get('current_version', 'github.com/flowerey/Upload-Assistant')}"
         }
 
         try:
@@ -308,7 +308,7 @@ class AR():
             return None
 
         headers = {
-            "User-Agent": f"Upload Assistant {meta.get('current_version', 'github.com/Audionut/Upload-Assistant')}"
+            "User-Agent": f"flower's Upload Assistant {meta.get('current_version', 'github.com/flowerey/Upload-Assistant')}"
         }
 
         try:

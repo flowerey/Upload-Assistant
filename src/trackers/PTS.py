@@ -23,7 +23,7 @@ class PTS:
         self.announce = self.config['TRACKERS'][self.tracker]['announce_url']
         self.auth_token = None
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f"Upload Assistant/2.3 ({platform.system()} {platform.release()})"
+            'User-Agent': f"flower's Upload Assistant/1.0 ({platform.system()} {platform.release()})"
         }, timeout=60.0)
 
     async def validate_credentials(self, meta):
@@ -105,7 +105,7 @@ class PTS:
         if custom_description_header:
             description_parts.append(custom_description_header)
 
-        description_parts.append(f"[right][url=https://github.com/flowerey/Upload-Assistant][size=1]{meta['ua_signature']}[/size][/url][/right]")
+        description_parts.append(f"[font=Monospace][right][url=https://github.com/flowerey/Upload-Assistant][size=1]{meta['ua_signature']}[/size][/url][/right][/font]")
 
         final_description = "\n\n".join(filter(None, description_parts))
         from src.bbcode import BBCODE

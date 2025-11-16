@@ -31,7 +31,7 @@ class TL:
             f'https://tracker.tleechreload.org/a/{self.passkey}/announce'
         ]
         self.session.headers.update({
-            'User-Agent': f'Upload Assistant ({platform.system()} {platform.release()})'
+            'User-Agent': f"flower's Upload Assistant ({platform.system()} {platform.release()})"
         })
 
     async def login(self, meta, force=False):

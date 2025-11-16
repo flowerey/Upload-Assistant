@@ -27,7 +27,7 @@ class FF:
         self.requests_url = f"{self.base_url}/requests.php"
         self.auth_token = None
         self.session = httpx.AsyncClient(headers={
-            'User-Agent': f"Upload Assistant/2.3 ({platform.system()} {platform.release()})"
+            'User-Agent': f"flower's Upload Assistant/1.0 ({platform.system()} {platform.release()})"
         }, timeout=30.0)
 
     async def validate_credentials(self, meta):
@@ -218,7 +218,7 @@ class FF:
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[url=https://github.com/flowerey/Upload-Assistant][center][size=1]{meta['ua_signature']}[/size][/center][/url]")
+        desc_parts.append(f"[font=Monospace][url=https://github.com/flowerey/Upload-Assistant][center][size=12]{meta['ua_signature']}[/size][/center][/url][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 
