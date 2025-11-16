@@ -810,10 +810,10 @@ async def do_the_thing(base_dir):
         else:
             break
 
-    meta['ua_name'] = 'Upload Assistant'
+    meta['ua_name'] = "flower's Upload Assistant"
     meta['current_version'] = await update_notification(base_dir)
 
-    signature = 'Created by Upload Assistant'
+    signature = "Created by flower's Upload Assistant"
     if meta.get('current_version', ''):
         signature += f" {meta['current_version']}"
     meta['ua_signature'] = signature

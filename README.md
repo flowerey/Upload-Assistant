@@ -1,20 +1,32 @@
 # flower's Upload Assistant
 
-Fork of wastaken's Upload Assistant (desc branch), with updates from main repo, and my own custom changes.
+Fork of [wastaken's Upload Assistant (desc branch)](https://github.com/Audionut/Upload-Assistant), with updates from the main repo and my own custom changes.
 
-Might be a fully own customized fork, but unsure. :p
+Please see the original repo (Audionut/Upload Assistant) for installing and support.
 
-Currently does:
+## TODOs
 
-Adds support for IHD (partially, still missing Anime movies)
+* Replace signature with own
+* Some other fixes
+* Most likely remove Docker
+* Run CI's
+* Remove useless stuff
+* Add support for RHD
+* Other stuff
+* Might be a fully own customized fork, but unsure :p
 
-Fix LDU timeout (needs testing, still)
+## Features
 
-Better UNIT3D description handling
+* Adds support for IHD (partially, still missing Anime movies)
+* Update mkbrr
+* Customizable timeout for every tracker (see example-config.py)
+* Fix LDU timeout error
+* Improved UNIT3D description handling
+* Support for custom signatures (doesn't modify Created by Upload Assistant vX.X.X, yet, see example-config.py)
 
-Add support for custom signatures
+For a complete list of all changes, see [here](https://github.com/Audionut/Upload-Assistant/compare/master...flowerey:Upload-Assistant:main).
 
-Please see [here](https://github.com/Audionut/Upload-Assistant/compare/master...flowerey:Upload-Assistant:main) for a list of ALL changes.
+## Supported Trackers
 
 | Name               | Acronym | Name                   | Acronym |
 | ------------------ | :-----: | ---------------------- | :-----: |
