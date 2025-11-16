@@ -6,7 +6,6 @@ Please see the original repo (Audionut/Upload-Assistant) for installing and supp
 
 ## TODOs
 
-* Fix IHD Anime detection
 * Add support for RHD
 * Fix --description (possibly my skill issue)
 * Possibly fix Aither internal upload description
