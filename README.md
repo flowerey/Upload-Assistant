@@ -12,6 +12,7 @@ Please see the original repo (Audionut/Upload Assistant) for installing and supp
 * Other stuff
 * Fully rebrand
 * Fix --description
+* Possibly fix Aither internal upload description
 
 ## Features
 
