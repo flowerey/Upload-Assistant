@@ -20,7 +20,7 @@ class HHD(UNIT3D):
         self.torrent_url = f'{self.base_url}/torrents/'
         self.banned_groups = [
             'aXXo', 'BONE', 'BRrip', 'CM8', 'CrEwSaDe', 'CTFOH', 'dAV1nci', 'd3g',
-            'DNL', 'FaNGDiNG0', 'GalaxyTV', 'HD2DVD', 'HDTime', 'iHYTECH', 'ION10',
+            'DNL', 'FaNGDiNG0', 'flower', 'GalaxyTV', 'HD2DVD', 'HDTime', 'iHYTECH', 'ION10',
             'iPlanet', 'KiNGDOM', 'LAMA', 'MeGusta', 'mHD', 'mSD', 'NaNi', 'NhaNc3',
             'nHD', 'nikt0', 'nSD', 'OFT', 'PRODJi', 'RARBG', 'Rifftrax', 'SANTi',
             'SasukeducK', 'ShAaNiG', 'Sicario', 'STUTTERSHIT', 'TGALAXY', 'TORRENTGALAXY',
