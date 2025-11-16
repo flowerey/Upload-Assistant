@@ -12,7 +12,7 @@ Please see the original repo (Audionut/Upload-Assistant) for installing and supp
 
 ## Features
 
-* Adds support for IHD (partially, still missing Anime movies)
+* Adds support for IHD
 * Update mkbrr
 * Customizable timeout for every tracker (see example-config.py)
 * Fix LDU timeout error
