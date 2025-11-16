@@ -11,6 +11,7 @@ Please see the original repo (Audionut/Upload Assistant) for installing and supp
 * Add support for RHD
 * Other stuff
 * Fully rebrand
+* Fix --description
 
 ## Features
 
