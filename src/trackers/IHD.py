@@ -18,6 +18,9 @@ class IHD(UNIT3D):
         self.banned_groups = [""]
 
     async def get_category_id(self, meta):
+        if meta.get('anime', False) and meta.get('category', '').upper() == 'MOVIE':
+            return {'category_id': '4'}
+
         if meta.get('anime'):
             return {'category_id': '3'}
 
