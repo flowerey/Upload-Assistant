@@ -326,7 +326,7 @@ class Commands(commands.Cog):
             embed.add_field(name="POTENTIALLY MISSING INFORMATION:", value="\n".join(missing), inline=False)
         embed.set_thumbnail(url=f"https://image.tmdb.org/t/p/original{meta['poster']}")
         embed.set_footer(text=meta['uuid'])
-        embed.set_author(name="L4G's Upload Assistant", url="https://github.com/Audionut/Upload-Assistant", icon_url="https://images2.imgbox.com/6e/da/dXfdgNYs_o.png")
+        embed.set_author(name="flower's Upload Assistant", url="https://github.com/flowerey/Upload-Assistant", icon_url="https://images2.imgbox.com/6e/da/dXfdgNYs_o.png")
 
         message = await ctx.fetch_message(meta['embed_msg_id'])
         await message.edit(embed=embed)
