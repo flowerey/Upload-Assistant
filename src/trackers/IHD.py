@@ -51,4 +51,3 @@ class IHD(UNIT3D):
             '1080i': '4',
         }.get(meta['resolution'], '10')
         return {'resolution_id': resolution_id}
-
