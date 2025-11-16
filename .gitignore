@@ -11,8 +11,6 @@ data/web_ui/templates/*.html
 data/web_ui/static/js/*.js
 data/web_ui/*.py
 requirements.txt
-docker-compose.yml
-Dockerfile
 bin/mkbrr/*
 *.mkv
 .vscode/
