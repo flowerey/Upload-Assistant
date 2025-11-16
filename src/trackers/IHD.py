@@ -32,7 +32,6 @@ class IHD(UNIT3D):
 
         return {'category_id': category_id}
 
-
     async def get_type_id(self, meta):
         type_id = {
             'DISC': '1',
@@ -52,3 +51,4 @@ class IHD(UNIT3D):
             '1080i': '4',
         }.get(meta['resolution'], '10')
         return {'resolution_id': resolution_id}
+
