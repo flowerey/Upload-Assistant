@@ -220,7 +220,7 @@ class GPW():
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[font=Monospace][align=right][url=https://github.com/flowerey/Upload-Assistant][size=12]{meta['ua_signature']}[/size][/url][/align][/font]")
+        desc_parts.append(f"[font=Monospace][align=left][url=https://github.com/flowerey/Upload-Assistant][size=2]{meta['ua_signature']}[/size][/url][/align][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 

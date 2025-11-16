@@ -311,7 +311,7 @@ class ACM(UNIT3D):
                     await descfile.write(f'[url={web_url}][img=350]{img_url}[/img][/url]')
                 await descfile.write('\n[/center]')
 
-            await descfile.write(f"\n[font=Monospace][right][url=https://github.com/flowerey/Upload-Assistant][size=12]{meta['ua_signature']}[/size][/url][/right][/font]")
+            await descfile.write(f"\n[font=Monospace][left][url=https://github.com/flowerey/Upload-Assistant][size=4]{meta['ua_signature']}[/size][/url][/left][/font]")
 
         async with aiofiles.open(output_path, 'r', encoding='utf-8') as f:
             final_desc = await f.read()

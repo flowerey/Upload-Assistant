@@ -105,7 +105,7 @@ class PTS:
         if custom_description_header:
             description_parts.append(custom_description_header)
 
-        description_parts.append(f"[font=Monospace][right][url=https://github.com/flowerey/Upload-Assistant][size=1]{meta['ua_signature']}[/size][/url][/right][/font]")
+        description_parts.append(f"[font=Monospace][left][url=https://github.com/flowerey/Upload-Assistant][size=2]{meta['ua_signature']}[/size][/url][/left][/font]")
 
         final_description = "\n\n".join(filter(None, description_parts))
         from src.bbcode import BBCODE

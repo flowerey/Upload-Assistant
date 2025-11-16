@@ -207,7 +207,7 @@ class SPD:
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[url=https://github.com/flowerey/Upload-Assistant]{meta['ua_signature']}[/url]")
+        desc_parts.append(f"[font=Monospace][url=https://github.com/flowerey/Upload-Assistant]{meta['ua_signature']}[/url][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 
