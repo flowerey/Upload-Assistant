@@ -4,7 +4,7 @@ Fork of [wastaken's Upload Assistant (desc branch)](https://github.com/Audionut/
 
 Please see the original repo (Audionut/Upload Assistant) for installing and support.
 
-## TODOs (currently implemented locally)
+## TODOs
 
 * Replace signature with own
 * Some other fixes
@@ -15,7 +15,7 @@ Please see the original repo (Audionut/Upload Assistant) for installing and supp
 * Other stuff
 * Might be a fully own customized fork, but unsure :p
 
-## Features (currently working)
+## Features
 
 * Adds support for IHD (partially, still missing Anime movies)
 * Customizable timeout for every tracker (see example-config.py)
