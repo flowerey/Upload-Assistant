@@ -520,8 +520,8 @@ class BBCODE:
         desc = re.sub(bot_signature_regex, "", desc, flags=re.IGNORECASE | re.VERBOSE)
         # Remove Aither internal signature
         desc = re.sub(r"\[center\]\[b\]\[size=\d+\]🖌️\[/size\]\[/b\][\s\S]*?This is an internal release which was first released exclusively on Aither\.[\s\S]*?🍻 Cheers to all the Aither.*?\[/center\]", "", desc, flags=re.IGNORECASE)
-        desc = re.sub(r"\[center\].*Uploaded with.*Upload Assistant.*\[\/center\]", "", desc, flags=re.IGNORECASE)
-        desc = re.sub(r"\[right\].*Uploaded with.*Upload Assistant.*\[\/right\]", "", desc, flags=re.IGNORECASE)
+        desc = re.sub(r"\[center\].*Uploaded with.*flower's Upload Assistant.*\[\/center\]", "", desc, flags=re.IGNORECASE)
+        desc = re.sub(r"\[right\].*Uploaded with.*flower's Upload Assistant.*\[\/right\]", "", desc, flags=re.IGNORECASE)
 
         # Remove leftover [img] or [URL] tags in the description
         desc = re.sub(r"\[img\][\s\S]*?\[\/img\]", "", desc, flags=re.IGNORECASE)
