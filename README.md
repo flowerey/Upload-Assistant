@@ -6,9 +6,8 @@ Please see the original repo (Audionut/Upload-Assistant) for installing and supp
 
 ## TODOs
 
-* Enable request search support for IHD (which I disabled when adding support)
-* Fix --description (possibly my skill issue)
-* Possibly fix Aither internal upload description
+* Fix --description, for while, use the automatic description grabber
+* Maybe make the signature modifiable?
 
 ## Features
 
