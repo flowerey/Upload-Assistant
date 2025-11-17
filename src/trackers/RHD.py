@@ -3,6 +3,7 @@ from typing import Any, Dict
 from src.trackers.COMMON import COMMON
 from src.trackers.UNIT3D import UNIT3D
 
+
 class RHD(UNIT3D):
     def __init__(self, config):
         super().__init__(config, tracker_name='RHD')
