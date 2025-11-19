@@ -2,13 +2,16 @@
 
 Fork of [wastaken's Upload Assistant (desc branch)](https://github.com/wastaken7/Upload-Assistant), with updates from the main repo and my own custom changes.
 
-Please see the original repo (Audionut/Upload-Assistant) for installing and support.
+Clone this repo, install dependencies, and run python config-generator.py. It should be working.
+
+Currently I don't have any plans for adding back Docker support and no plans for a stable release too. Use locally if possible.
 
 ## TODOs
 
 * Fix --description, for while, use the automatic description grabber
 * Maybe make the signature modifiable?
 * Also maybe add an upload step that we can specify source with a flag
+* Support for TurkSeed, seems hard due to their naming schema
 
 ## Features
 
