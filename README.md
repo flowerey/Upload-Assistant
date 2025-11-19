@@ -8,6 +8,7 @@ Please see the original repo (Audionut/Upload-Assistant) for installing and supp
 
 * Fix --description, for while, use the automatic description grabber
 * Maybe make the signature modifiable?
+* Also maybe add an upload step that we can specify source with a flag
 
 ## Features
 
