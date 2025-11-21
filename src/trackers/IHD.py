@@ -127,5 +127,4 @@ class IHD(UNIT3D):
                     console.print('[bold red]Pornographic content is not allowed at IHD, unless it follows strict rules.')
                 should_continue = False
 
-
         return should_continue
