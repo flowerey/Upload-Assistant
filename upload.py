@@ -206,6 +206,12 @@ async def process_meta(meta, base_dir, bot=None):
         return
 
     meta['emby_debug'] = meta.get('emby_debug') if meta.get('emby_debug', False) else config['DEFAULT'].get('emby_debug', False)
+
+    if not meta.get('custom_source') and not meta.get('unattended'):
+        source_input = cli_ui.ask_string("Enter custom source for description (optional, leave blank to skip)", default="")
+        if source_input:
+            meta['custom_source'] = source_input
+
     if meta.get('emby_cat', None) == "movie" and meta.get('category', None) != "MOVIE":
         console.print(f"[red]Wrong category detected! Expected 'MOVIE', but found: {meta.get('category', None)}[/red]")
         meta['we_are_uploading'] = False
@@ -312,12 +318,6 @@ async def process_meta(meta, base_dir, bot=None):
             await cleanup()
             reset_terminal()
             sys.exit(1)
-
-        # Doesn't ask if it finds description
-        if not meta.get('custom_source') and not meta.get('unattended'):
-            source_input = cli_ui.ask_string("Enter custom source for description (optional, leave blank to skip)", default="")
-            if source_input:
-                meta['custom_source'] = [source_input]
 
     if meta.get('emby', False):
         if not meta['debug']:
