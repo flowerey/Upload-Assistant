@@ -1,21 +1,24 @@
 {
-    "SubsPlease" : {
-        "type" : "WEBDL",
+    "SubsPlease": {
+        "type": "WEBDL",
         "source": "WEB"
     },
-    "Pasta" : {
-        "type" : "WEBRIP"
+    "Pasta": {
+        "type": "WEBRIP"
     },
-    "Sootery" :{
-        "type" : "WEBRIP"
+    "Sootery": {
+        "type": "WEBRIP"
     },
-    "YameteTomete" :{
-        "type" : "WEBRIP"
+    "YameteTomete": {
+        "type": "WEBRIP"
     },
-    "Golumpa" : {
-        "type" : "WEBDL"
+    "Golumpa": {
+        "type": "WEBDL"
     },
-    "NanDesuKa" : {
-        "in_name" : "NanDesuKa"
+    "NanDesuKa": {
+        "in_name": "NanDesuKa"
+    },
+	"flower": {
+        "personalrelease": true
     }
 }

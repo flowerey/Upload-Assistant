@@ -517,6 +517,12 @@ class DescriptionBuilder:
                 )
                 desc_parts.append(meta_description)
 
+        # Add custom source before screenshots
+        custom_source = meta.get("custom_source")
+        if custom_source:
+            source_bbcode = f"Source:\n[quote]{custom_source}[/quote]\n"
+            desc_parts.append(source_bbcode)
+
         # Description from file/pastebin link
         desc_parts.append(await self.get_user_description(meta))
 

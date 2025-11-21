@@ -313,6 +313,12 @@ async def process_meta(meta, base_dir, bot=None):
             reset_terminal()
             sys.exit(1)
 
+        # Doesn't ask if it finds description
+        if not meta.get('custom_source') and not meta.get('unattended'):
+            source_input = cli_ui.ask_string("Enter custom source for description (optional, leave blank to skip)", default="")
+            if source_input:
+                meta['custom_source'] = [source_input]
+
     if meta.get('emby', False):
         if not meta['debug']:
             await nfo_link(meta)
@@ -342,7 +348,7 @@ async def process_meta(meta, base_dir, bot=None):
         trackers = meta['trackers']
 
         audio_prompted = False
-        for tracker in ["AITHER", "ASC", "BJS", "BT", "CBR", "DP", "FF", "GPW", "HUNO", "LDU", "LT", "OE", "PTS", "SAM", "SHRI", "SPD", "TTR", "ULCX"]:
+        for tracker in ["AITHER", "ASC", "BJS", "BT", "CBR", "DP", "FF", "GPW", "HUNO", "IHD", "LDU", "LT", "OE", "PTS", "SAM", "SHRI", "SPD", "TTR", "ULCX"]:
             if tracker in trackers:
                 if not audio_prompted:
                     await process_desc_language(meta, desc=None, tracker=tracker)
