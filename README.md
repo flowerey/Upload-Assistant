@@ -41,7 +41,7 @@ For a complete list of all changes, see [here](https://github.com/Audionut/Uploa
 | GreatPosterWall   |   GPW   | hawke-uno              |   HUNO  |
 | HDBits            |   HDB   | HD-Space               |   HDS   |
 | HD-Torrents       |   HDT   | HomieHelpDesk          |   HHD   |
-| ImmortalSeed      |    IS   | InfinityHD             |   IHD   |
+| InfinityHD        |   IHD   | ImmortalSeed           |    IS   |
 | ItaTorrents       |   ITT   | LastDigitalUnderground |   LDU   |
 | Lat-Team          |    LT   | Locadora               |   LCD   |
 | LST               |   LST   | MoreThanTV             |   MTV   |
