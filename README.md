@@ -60,3 +60,9 @@ For a complete list of all changes, see [here](https://github.com/Audionut/Uploa
 | TVChaosUK         |   TVC   | ULCX                   |   ULCX  |
 | UTOPIA            |   UTP   | YOiNKED                |  YOINK  |
 | YUSCENE           |   YUS   |
+
+## License
+
+This project is a fork of Audionut/Upload-Assistant, which is distributed under its original license. My contributions, however, are released under the Unlicense.
+
+In practical terms, you are free to copy, modify, distribute, and use my changes in any way you wish—**no attribution required**.
