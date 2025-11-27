@@ -232,3 +232,4 @@ data/nfos/*
 data/*.json
 .venv/*
 venv/*
+data/tags.json
