@@ -1420,8 +1420,7 @@ async def capture_screenshot(args):
 
         # Build command
         # Always ensure at least format filter is present for PNG compression to work
-        if not vf_filters:
-            vf_filters.append("format=rgb24")
+        vf_filters.append("format=rgb24")
         vf_chain = ",".join(vf_filters)
 
         cmd = [
