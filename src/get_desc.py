@@ -6,6 +6,8 @@ import os
 import re
 import requests
 import urllib.parse
+from jinja2 import Template
+
 from pymediainfo import MediaInfo
 from src.bbcode import BBCODE
 from src.console import console
@@ -31,8 +33,6 @@ async def gen_desc(meta):
         content_written = False
 
         if meta.get("description_template"):
-            from jinja2 import Template
-
             try:
                 with open(f"{meta['base_dir']}/data/templates/{meta['description_template']}.txt", "r") as f:
                     template = Template(f.read())
@@ -450,6 +450,8 @@ class DescriptionBuilder:
         # Custom Header
         if not desc_header:
             desc_header = await self.get_custom_header(tracker)
+        if desc_header:
+            desc_parts.append(desc_header + "\n")
 
         # Language
         try:
@@ -515,7 +517,10 @@ class DescriptionBuilder:
                     meta_description,
                     flags=re.DOTALL,
                 )
-                desc_parts.append(meta_description)
+                if meta_description:
+                    desc_parts.append(meta_description)
+        elif meta_description:
+            desc_parts.append(meta_description)
 
         # Add custom source before screenshots
         custom_source = meta.get("custom_source")
@@ -573,6 +578,7 @@ class DescriptionBuilder:
     async def _check_saved_pack_image_links(self, meta, approved_image_hosts):
         pack_images_file = os.path.join(meta["base_dir"], "tmp", meta["uuid"], "pack_image_links.json")
         pack_images_data = {}
+        approved_hosts = set(approved_image_hosts or [])
         if await self.common.path_exists(pack_images_file):
             try:
                 async with aiofiles.open(pack_images_file, "r", encoding="utf-8") as f:
@@ -586,14 +592,12 @@ class DescriptionBuilder:
                             raw_url = img.get("raw_url", "")
                             # Extract hostname from URL (e.g., ptpimg.me -> ptpimg)
                             try:
-                                import urllib.parse
-
                                 parsed_url = urllib.parse.urlparse(raw_url)
                                 hostname = parsed_url.netloc
                                 # Get the main domain name (first part before the dot)
                                 host_key = hostname.split(".")[0] if hostname else ""
 
-                                if host_key in approved_image_hosts:
+                                if not approved_hosts or host_key in approved_hosts:
                                     images_to_keep.append(img)
                                 elif meta["debug"]:
                                     console.print(
