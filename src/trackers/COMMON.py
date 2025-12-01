@@ -13,7 +13,6 @@ import sys
 from src.bbcode import BBCODE
 from src.console import console
 from src.exportmi import exportInfo
-from src.languages import process_desc_language
 from torf import Torrent
 
 

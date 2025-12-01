@@ -5,6 +5,7 @@ import re
 from data.config import config
 from src.console import console
 from src.get_desc import DescriptionBuilder
+from src.languages import process_desc_language
 from src.trackers.UNIT3D import UNIT3D
 
 
