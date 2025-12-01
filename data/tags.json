@@ -17,5 +17,8 @@
     },
     "NanDesuKa": {
         "in_name": "NanDesuKa"
+    },
+    "flower": {
+        "personalrelease": true
     }
 }

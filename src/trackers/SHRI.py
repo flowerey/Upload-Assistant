@@ -1142,7 +1142,7 @@ class SHRI(UNIT3D):
                 links_section += f"[size=11][color=#FFFFFF]TMDb: https://www.themoviedb.org/{media_type}/{tmdb_id}[/color][/size]\n"
             links_section += "\n"
 
-        ua_sig = meta.get("ua_signature", "Uploaded with flower's Upload Assistant")
+        ua_sig = meta.get("ua_signature", "Uploaded with flower's own Upload Assistant")
 
         # Mediainfo section
         mediainfo_section = ""
