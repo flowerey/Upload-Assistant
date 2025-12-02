@@ -372,6 +372,16 @@ class DescriptionBuilder:
         except Exception as e:
             console.print(f"[yellow]Warning: Error setting custom signature: {str(e)}[/yellow]")
         return custom_signature
+    
+    async def get_uploader_name(self, tracker):
+        try:
+            username = self.config["TRACKERS"][tracker].get(
+                "uploader_name",
+                self.config["DEFAULT"].get("uploader_name", None)
+            )
+            return username
+        except:
+            return None
 
     async def get_bluray_section(self, meta, tracker):
         release_url = ""
@@ -539,6 +549,14 @@ class DescriptionBuilder:
             meta, tracker, approved_image_hosts, images, multi_screens
         )
         desc_parts.append(discs_and_screenshots)
+
+        # Uploaded by section
+        uploader = await self.get_uploader_name(tracker)
+        if uploader:
+            desc_parts.append(
+                f"[center][size=12][color=#FFEFA9][font=Monospace]Uploaded by: {uploader}[/font][/color][/size]\n"
+                f"[center][color=#C9A526]────────────────────────[/color][/center]"
+            )
 
         # Custom Signature
         desc_parts.append(await self.get_custom_signature(tracker))

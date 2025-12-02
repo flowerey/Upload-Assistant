@@ -5,6 +5,10 @@ config = {
         # will print the changelog if an update is available
         "verbose_notification": False,
 
+        # group uploader name (e.g. blueberry)
+        # will be added to description
+        "uploader_name": "",
+
         # tmdb api key **REQUIRED**
         # visit "https://www.themoviedb.org/settings/api" copy api key and insert below
         "tmdb_api": "",
