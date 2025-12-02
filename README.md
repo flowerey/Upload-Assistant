@@ -8,9 +8,8 @@ Requirements:
 
 * Python 3.9+ and pip3
 * MediaInfo and ffmpeg installed on your system
-
-* Windows users: ffmpeg must be added to PATH. [Guide here](https://windowsloop.com/install-ffmpeg-windows-10/)
-* Alternatively, create a folder named ffmpeg within the Upload Assistant bin directory, and paste ffmpeg executables there.
+  * Windows users: ffmpeg must be added to PATH. [Guide here](https://windowsloop.com/install-ffmpeg-windows-10/)
+  * Alternatively, create a folder named ffmpeg within the Upload Assistant bin directory, and paste ffmpeg executables there.
 
 * If you encounter ffmpeg issues (e.g., `max workers` errors), see this [wiki](https://github.com/Audionut/Upload-Assistant/wiki/ffmpeg---max-workers-issues)
 
