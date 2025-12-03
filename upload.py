@@ -819,7 +819,7 @@ async def do_the_thing(base_dir):
     meta['ua_name'] = "flower's Upload Assistant"
     meta['current_version'] = await update_notification(base_dir)
 
-    signature = "Uploaded with flower's own Upload Assistant"
+    signature = "Uploaded with flower's private Upload Assistant"
     meta['ua_signature'] = signature
     meta['base_dir'] = base_dir
 

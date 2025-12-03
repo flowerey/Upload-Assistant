@@ -75,7 +75,7 @@ class DC:
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[font=Monospace][center][url=https://github.com/flowerey/Upload-Assistant]{meta['ua_signature']}[/url][/center][/font]")
+        desc_parts.append(f"[font=Monospace][center]{meta['ua_signature']}[/url][/center][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 

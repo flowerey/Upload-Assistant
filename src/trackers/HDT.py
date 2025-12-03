@@ -171,7 +171,7 @@ class HDT:
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[font=Monospace][left][url=https://github.com/flowerey/Upload-Assistant][size=2]{meta['ua_signature']}[/size][/url][/left][/font]")
+        desc_parts.append(f"[font=Monospace][left][size=2]{meta['ua_signature']}[/size][/url][/left][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 
