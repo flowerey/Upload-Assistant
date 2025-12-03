@@ -147,14 +147,17 @@ config = {
 
         # Providing the option to add a header, in bbcode, above the screenshot section where supported
         # Can be overridden in a per-tracker setting by adding this same config
-        "screenshot_header": "[h3][center]•─────• [color=#FFDA03]Screenshots[/color] •─────•[/center][/h3]",
+        "screenshot_header": "[h3][center]•─────• [color=#FFEFA9]Screenshots[/color] •─────•[/center][/h3]",
 
         # Allows adding a custom signature, in BBCode, at the bottom of the description section
         # Can be overridden in a per-tracker setting by adding this same config
         # Don't modify, or it will broke
         "custom_signature": (
-            "[size=12][color=#FFDA03][font=Monospace][center]flower is currently looking for nothing but competition![/center][/font][/color][/size]\n"
-            "[size=12][color=#FFDA03][font=Monospace][center]Greets to all members![/center][/font][/color][/size]"
+            "[center][size=12][color=#FFEFA9][font=Monospace]Uploaded by: uploader_name[/font][/color][/size]\n"
+            "[center][color=#C9A526]────────────────────────[/color][/center]\n"
+            "[center][size=12][color=#FFEFA9][font=Monospace]flower is currently looking for nothing but competition![/font][/color][/size]\n"
+            "[center][size=12][color=#FFEFA9][font=Monospace]Greets to all members![/font][/color][/size]\n"
+            "[center][color=#C9A526]────────────────────────[/color][/center]"
         ),
 
         # Which client are you using.

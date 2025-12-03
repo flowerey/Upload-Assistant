@@ -364,14 +364,31 @@ class DescriptionBuilder:
         return ""
 
     async def get_custom_signature(self, tracker):
-        custom_signature = ""
         try:
+            # Load per-tracker or default signature
             custom_signature = self.config["TRACKERS"][tracker].get(
-                "custom_signature", self.config["DEFAULT"].get("custom_signature", None)
+                "custom_signature",
+                self.config["DEFAULT"].get("custom_signature", None)
             )
+
+            if not custom_signature:
+                return None
+
+            # Load uploader_name (per-tracker or default)
+            uploader = self.config["TRACKERS"][tracker].get(
+                "uploader_name",
+                self.config["DEFAULT"].get("uploader_name", None)
+            )
+
+            # Replace placeholder in signature template
+            if uploader:
+                custom_signature = custom_signature.replace("uploader_name", uploader)
+
+            return custom_signature
+
         except Exception as e:
             console.print(f"[yellow]Warning: Error setting custom signature: {str(e)}[/yellow]")
-        return custom_signature
+            return None
     
     async def get_uploader_name(self, tracker):
         try:
