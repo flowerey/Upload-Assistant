@@ -87,7 +87,7 @@ class HDS:
         desc_parts.append(await builder.get_tonemapped_header(meta, self.tracker))
 
         # Signature
-        desc_parts.append(f"[font=Monospace][center][size=4]{meta['ua_signature']}[/size][/url][/center][/font]")
+        desc_parts.append(f"[font=Monospace][center][size=4]{meta['ua_signature']}[/size][/center][/font]")
 
         description = '\n\n'.join(part for part in desc_parts if part.strip())
 

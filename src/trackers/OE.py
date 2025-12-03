@@ -120,7 +120,7 @@ class OE(UNIT3D):
                     await descfile.write(f"[url={web_url}][img=350]{raw_url}[/img][/url]")
                 await descfile.write("[/center]")
 
-            await descfile.write(f"\n[font=Monospace][left][size=12]{meta['ua_signature']}[/size][/url][/left][/font]")
+            await descfile.write(f"\n[font=Monospace][left][size=12]{meta['ua_signature']}[/size][/left][/font]")
 
         async with aiofiles.open(f"{meta['base_dir']}/tmp/{meta['uuid']}/[{self.tracker}]DESCRIPTION.txt", 'r', encoding='utf-8') as f:
             desc = await f.read()

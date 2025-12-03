@@ -577,7 +577,7 @@ class DescriptionBuilder:
 
         # UA Signature
         if not signature:
-            signature = f"[font=Monospace][left][size=12]{meta['ua_signature']}[/size][/url][/left][/font]"
+            signature = f"[font=Monospace][left][size=12]{meta['ua_signature']}[/size][/left][/font]"
             if tracker == "HUNO":
                 signature = signature.replace("[size=4]", "[size=8]")
         desc_parts.append(signature)
