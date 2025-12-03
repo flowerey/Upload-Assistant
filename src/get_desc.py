@@ -391,12 +391,11 @@ class DescriptionBuilder:
             return None
 
     async def get_uploader_name(self, tracker):
-        try:
-            username = self.config["TRACKERS"][tracker].get(
-                "uploader_name",
-                self.config["DEFAULT"].get("uploader_name", None)
-            )
-            return username
+        username = self.config["TRACKERS"][tracker].get(
+            "uploader_name",
+            self.config["DEFAULT"].get("uploader_name", None)
+        )
+        return username
 
     async def get_bluray_section(self, meta, tracker):
         release_url = ""
