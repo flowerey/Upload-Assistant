@@ -32,6 +32,7 @@ class TVC():
         self.torrent_url = 'https://tvchaosuk.com/torrents/'
         self.signature = ""
         self.banned_groups = []
+        self.approved_image_hosts = ['imgbb', 'ptpimg', 'imgbox', 'pixhost', 'bam', 'onlyimage']
         tmdb.API_KEY = config['DEFAULT']['tmdb_api']
 
         pass
@@ -127,8 +128,7 @@ class TVC():
                 name += " [CHE]"
         return name
 
-    async def upload(self, meta, disctype):
-        common = COMMON(config=self.config)
+    async def check_image_hosts(self, meta):
         url_host_mapping = {
             "ibb.co": "imgbb",
             "ptpimg.me": "ptpimg",
@@ -138,8 +138,11 @@ class TVC():
             "onlyimage.org": "onlyimage",
         }
 
-        approved_image_hosts = ['imgbb', 'ptpimg', 'imgbox', 'pixhost', 'bam', 'onlyimage']
-        await check_hosts(meta, self.tracker, url_host_mapping=url_host_mapping, img_host_index=1, approved_image_hosts=approved_image_hosts)
+        await check_hosts(meta, self.tracker, url_host_mapping=url_host_mapping, img_host_index=1, approved_image_hosts=self.approved_image_hosts)
+        return
+
+    async def upload(self, meta, disctype):
+        common = COMMON(config=self.config)
         if 'TVC_images_key' in meta:
             image_list = meta['TVC_images_key']
         else:
@@ -154,7 +157,7 @@ class TVC():
         # type_id = await self.get_type_id(meta['type'])
         resolution_id = await self.get_res_id(meta['tv_pack'] if 'tv_pack' in meta else 0, meta['resolution'])
         # this is a different function that common function
-        await self.unit3d_edit_desc(meta, self.tracker, self.signature, image_list, approved_image_hosts=approved_image_hosts)
+        await self.unit3d_edit_desc(meta, self.tracker, self.signature, image_list, approved_image_hosts=self.approved_image_hosts)
 
         if meta['anon'] == 0 and not self.config['TRACKERS'][self.tracker].get('anon', False):
             anon = 0
