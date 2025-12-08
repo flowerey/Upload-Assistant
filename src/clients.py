@@ -102,13 +102,10 @@ class Clients():
             return
         else:
             inject_clients_config = self.config['DEFAULT'].get('injecting_client_list')
-            if isinstance(inject_clients_config, str) and inject_clients_config.strip():
+            if isinstance(inject_clients_config, str) and inject_clients_config:
                 inject_clients = [inject_clients_config]
-            elif isinstance(inject_clients_config, list):
-                # Filter out empty strings and whitespace-only strings
-                inject_clients = [c for c in inject_clients_config if c and str(c).strip()]
-            else:
-                inject_clients = []
+            elif isinstance(inject_clients_config, list) and inject_clients_config:
+                inject_clients = inject_clients_config
 
             if not inject_clients:
                 default_client = self.config['DEFAULT'].get('default_torrent_client')
