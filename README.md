@@ -31,7 +31,7 @@ pip3 install --user -U -r requirements.txt
 Optional: Use a virtual environment (recommended if you receive errors about an externally managed environment or want to keep Upload Assistant Python separate):
 
 ```bash
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -41,7 +41,7 @@ Configure Upload Assistant:
 * Run the configuration generator:
 
 ```bash
-python3 config-generator.py
+python config-generator.py
 ```
 * Or copy and rename `data/example-config.py` to `data/config.py`
 * And edit `config.py` with your information (more details in the [wiki](https://github.com/Audionut/Upload-Assistant/wiki))
@@ -64,11 +64,11 @@ git pull
 3. Update dependencies:
 
 ```bash
-python3 -m pip install --user -U -r requirements.txt
+python -m pip install --user -U -r requirements.txt
 ```
 
 4. Update your config options (or grab new options if added):
 
 ```bash
-python3 config-generator.py
+python config-generator.py
 ```
