@@ -18,7 +18,7 @@ config = {
 
         # Order of image hosts. primary host as first with others as backup
         # Available image hosts: imgbb, ptpimg, imgbox, pixhost, lensdump, ptscreens, onlyimage, dalexni, zipline, passtheimage
-        # Recommended: ptscreens and onlyimage
+        # Recommended: onlyimage and ptscreens
         "img_host_1": "",
         "img_host_2": "",
         "img_host_3": "",
