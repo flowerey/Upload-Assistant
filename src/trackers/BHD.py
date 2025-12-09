@@ -299,7 +299,7 @@ class BHD():
                     else:
                         await desc.write(f"[url={web_url}][img width=350]{img_url}[/img][/url] ")
                 await desc.write("[/align]")
-            await desc.write(f"\n[font=Monospace][align=left][url=https://github.com/flowerey/Upload-Assistant][size=4]{meta['ua_signature']}[/size][/url][/align][/font]")
+            await desc.write(f"\n[font=Monospace][align=left][url=https://github.com/flowerey/Upload-Assistant][size=10]{meta['ua_signature']}[/size][/url][/align][/font]")
             await desc.close()
         return
 
