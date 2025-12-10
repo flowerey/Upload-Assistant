@@ -87,7 +87,7 @@ class ANT:
                 antType = 1
             elif "stand-up comedy" in keywords:
                 antType = 3
-        antType = None
+
         if antType is None:
             if not meta['unattended']:
                 antTypeList = ["Feature Film", "Short Film", "Miniseries", "Other"]
