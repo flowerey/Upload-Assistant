@@ -49,8 +49,7 @@ class UNIT3D:
         }
         if meta['category'] == 'TV':
             params['name'] = params['name'] + f" {meta.get('season', '')}"
-        if meta.get('edition', '') != '':
-            params['name'] = params['name'] + f" {meta['edition']}"
+
         try:
             timeout_value = self.config['TRACKERS'].get(self.tracker, {}).get('timeout', 10.0)
             async with httpx.AsyncClient(timeout=timeout_value, follow_redirects=True) as client:
