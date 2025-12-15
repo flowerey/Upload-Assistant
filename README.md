@@ -14,45 +14,7 @@ Currently I don't have any plans for adding back Docker support and no plans for
 * Maybe make the signature modifiable?
 * Support for TurkSeed, seems hard due to their naming schema
 
-<<<<<<< HEAD
 ## Features
-=======
-|Name|Acronym|Name|Acronym|
-|-|:-:|-|:-:|
-|Aither|AITHER|Alpharatio|AR|
-|AmigosShareClub|ASC|AnimeLovers|AL|
-|Anthelion|ANT|AsianCinema|ACM|
-|AvistaZ|AZ|Beyond-HD|BHD|
-|BitHDTV|BHDTV|Blutopia|BLU|
-|BrasilJapão-Share|BJS|BrasilTracker|BT|
-|CapybaraBR|CBR|Cinematik|TIK|
-|CinemaZ|CZ|DarkPeers|DP|
-|DigitalCore|DC|Emuwarez|EMUW|
-|FearNoPeer|FNP|FileList|FL|
-|Friki|FRIKI|FunFile|FF|
-|GreatPosterWall|GPW|hawke-uno|HUNO|
-|HDBits|HDB|HD-Space|HDS|
-|HD-Torrents|HDT|HomieHelpDesk|HHD|
-|ImmortalSeed|IS|InfinityHD|IHD|
-|ItaTorrents|ITT|LastDigitalUnderground|LDU|
-|Lat-Team|LT|Locadora|LCD|
-|LST|LST|MoreThanTV|MTV|
-|Nebulance|NBL|OldToonsWorld|OTW|
-|OnlyEncodes+|OE|PassThePopcorn|PTP|
-|PolishTorrent|PTT|Portugas|PT|
-|PTerClub|PTER|PrivateHD|PHD|
-|PTSKIT|PTS|Racing4Everyone|R4E|
-|Rastastugan|RAS|ReelFLiX|RF|
-|RetroFlix|RTF|Samaritano|SAM|
-|seedpool|SP|ShareIsland|SHRI|
-|SkipTheCommerials|STC|SpeedApp|SPD|
-|Swarmazon|SN|TorrentHR|THR|
-|Torrenteros|TTR|TorrentLeech|TL|
-|The Leach Zone|TLZ|ToTheGlory|TTG|
-|TVChaosUK|TVC|ULCX|ULCX|
-|UTOPIA|UTP|YOiNKED|YOINK|
-|YUSCENE|YUS|||
->>>>>>> a98eb501 (Add TLZ support (#1048))
 
 * Support for custom signatures (see example-config.py)
 * Improved UNIT3D description handling
