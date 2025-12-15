@@ -68,3 +68,5 @@ For a complete list of all changes, see [here](https://github.com/Audionut/Uploa
 This project is a fork of Audionut/Upload-Assistant, which is distributed under its original license. My contributions, however, are released under the Unlicense.
 
 In practical terms, you are free to copy, modify, distribute, and use my changes in any way you wish—**no attribution required**.
+
+Though he licensed the actual under his ["suspicious"](https://github.com/Audionut/Upload-Assistant/blob/master/LICENSE) license, it doesn't apply to this fork. So go ahead.
