@@ -1,5 +1,7 @@
 # flower's Upload Assistant
 
+Thanks to @Audionut for the special shout out! Without him, this fork wouldn't exist at all!
+
 Fork of [wastaken's Upload Assistant (desc branch)](https://github.com/wastaken7/Upload-Assistant), with updates from the main repo and my own custom changes.
 
 Clone this repo, install dependencies, and run python config-generator.py. It should be working.
